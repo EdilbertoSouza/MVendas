@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MVendas</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="clientes">Clientes</string>
+    <string name="produtos">Produtos</string>
+    <string name="orcamentos">Orçamentos</string>
+    <string name="listar_clientes">Listar Clientes</string>
+    <string name="buscar_cliente">Buscar Cliente</string>
+    <string name="voltar_tela">Voltar</string>
+    <string name="cliente">Cliente</string>
+    <string name="buscar_cliente_codigo">Buscar por Código</string>
+    <string name="buscar_cliente_cnpj">Buscar por CPF/CNPJ</string>
+    <string name="dado_busca_cliente">Informe o código ou CPF/CNPJ do cliente</string>
+    <string name="cliente_codigo">Código</string>
+
+</resources>
