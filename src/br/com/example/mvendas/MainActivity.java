@@ -14,17 +14,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		final Button btClientes = (Button) findViewById(R.id.btClientes);  
-        
-		btClientes.setOnClickListener(new View.OnClickListener() {  
-            public void onClick(View v) {  
-    			//startActivity(new Intent(this, ClientesActivity.class));
-    			Uri uri = Uri.parse("http://www.developer.android.com"); 
-    			Intent it = new Intent(Intent.ACTION_VIEW, uri);     			
-    			startActivity(it); 
-            }  
-        });  
 	}
 
 	@Override
@@ -32,6 +21,12 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	 
+	public void clientesClick(View v) {
+		Intent i = new Intent(this, ClientesActivity.class);
+		//i.setClass(this, ClientesActivity.class);
+		startActivity(i);		
 	}
 		
 }
