@@ -1,11 +1,9 @@
 package br.com.example.mvendas;
 
-import java.util.Iterator;
-import java.util.List;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 
 public class ClientesActivity extends Activity {
 	
@@ -14,16 +12,19 @@ public class ClientesActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_clientes);
 	}
-	
-	public void listarClientesClick() {
-		WebServiceClient wsc = new WebServiceClient();
-		List clientes = wsc.buscarClientes();
-		
-		for (Iterator iterator = clientes.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();			
-			Log.i("teste", "Cliente: " + object.toString());
-		}
-		
+
+	public void listarClientesClick(View v) {
+		Intent i = new Intent(this, ListarClientesActivity.class);
+		startActivity(i);		
+	}
+
+	public void buscarClienteClick(View v) {
+		Intent i = new Intent(this, BuscarClienteActivity.class);
+		startActivity(i);		
+	}
+
+	public void voltarClick(View v) {
+		super.onDestroy();
 	}
 
 }

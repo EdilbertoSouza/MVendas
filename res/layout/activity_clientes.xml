@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginTop="40dp"
+        android:onClick="buscarClienteClick"
         android:text="@string/buscar_cliente"
         android:textSize="@dimen/activity_main_buttons" />
 
@@ -27,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginTop="40dp"
+        android:onClick="voltarClick"
         android:text="@string/voltar_tela"
         android:textSize="@dimen/activity_main_buttons" />
 

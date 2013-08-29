@@ -25,7 +25,6 @@ public class MainActivity extends Activity {
 	 
 	public void clientesClick(View v) {
 		Intent i = new Intent(this, ClientesActivity.class);
-		//i.setClass(this, ClientesActivity.class);
 		startActivity(i);		
 	}
 		

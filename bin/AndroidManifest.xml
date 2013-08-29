@@ -26,7 +26,11 @@
             android:name=".ClientesActivity"
             android:label="@string/clientes" >
         </activity>
-        
+        <activity
+            android:name=".ListarClientesActivity"
+            android:label="@string/listar_clientes" >
+        </activity>       
+    
     </application>
-
+    
 </manifest>
