@@ -6,23 +6,25 @@ import org.json.JSONTokener;
 
 public class Equipamento {
 
-	private SugarClient sc;
+	private SugarClientSingleton sc;
 	private String session;
 
-	public Equipamento(SugarClient sc) {
+	public Equipamento(SugarClientSingleton sc) {
 		this.sc = sc;
 		this.session = this.sc.getSessionId();
 	}
 
 	public String recuperarId(String sitio) throws Exception {
 		// Definindo os parametros para chamar o método web
+		String fields[] = {"id"};
+		String select_fields = this.sc.toArrayData(fields);
 		String parameters[][] = { 
 			{"session", this.session}, 
 			{"module_name", "os_Equipamentos"},
 			{"query", "name='" + sitio + "'"},
 			{"order_by", ""},
 			{"offset", "0"},
-			{"select_fields", "['id']"}, 
+			{"select_fields", select_fields}, 
 			{"link_name_to_fields_array", "[]"}, 
 			{"max_results", "1"},
 			{"deleted", "0"},
@@ -43,13 +45,15 @@ public class Equipamento {
 
 	public String recuperarStatus(String id) throws JSONException {
 		// Definindo os parametros para chamar o método web
+		String fields[] = {"status"};
+		String select_fields = this.sc.toArrayData(fields);
 		String parameters[][] = {
 			{"session", this.session}, 
 			{"module_name", "os_Equipamentos"},
 			{"query", "os_equipamentos.id = '" + id + "'"},
 			{"order_by", ""},
 			{"offset", "0"},
-			{"select_fields", "['status']"}, 
+			{"select_fields", select_fields}, 
 			{"link_name_to_fields_array", "[]"}, 
 			{"max_results", "1"},
 			{"deleted", "0"},

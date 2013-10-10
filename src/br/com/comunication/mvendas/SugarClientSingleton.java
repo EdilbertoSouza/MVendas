@@ -13,10 +13,12 @@ import org.json.JSONTokener;
 
 import android.util.Log;
 
-public class SugarClient {
+public class SugarClientSingleton {
 
 	private String url;
 	private String session;
+	private static SugarClientSingleton sc;
+
 /*	
 	private String user;
 	private String session;
@@ -26,8 +28,15 @@ public class SugarClient {
 	 * Construtor da classe 
 	 * @param string url com o endereço do webservice REST (ponto de entrada)
 	 */
-	public SugarClient(String url)  {
+	private SugarClientSingleton(String url)  {
 		this.url = url;
+	}
+			
+	public static SugarClientSingleton getInstance(String url) {
+		if (sc == null) {
+			sc = new SugarClientSingleton(url);
+		}
+		return sc;
 	}
 
 	public String login(String userName, String password) throws Exception {
@@ -66,30 +75,29 @@ public class SugarClient {
 	
     public String call(String method, String parameters[][]) {
     	String restData = toRestData(parameters);
-        String urlRequest = this.url+"?method="+method+"&input_type=json&response_type=json&rest_data="+restData;
+        String request = this.url+"?method="+method+"&input_type=json&response_type=json&rest_data="+restData;
         String result = "";
-        Log.i("info", "request = " + urlRequest);
+        Log.i("info", "request = " + request);
         try {
-			result = httpPost(urlRequest);
+			result = httpPost(request);
 	        Log.i("info", "result = " + result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
 		return result;
-    }
+    }    
     
     public String toRestData(String params[][]) {
 		StringBuffer sb = new StringBuffer();
-		
 		sb.append("{");
 		for (int i = 0; i < params.length; i++) {
 			sb.append(Character.toString((char) 34));
 			sb.append(params[i][0]);
 			sb.append(Character.toString((char) 34));
 			sb.append(":");
-			sb.append(Character.toString((char) 34));
+			if (colocarAspas(params[i][0]))	sb.append(Character.toString((char) 34));
 			sb.append(params[i][1]);
-			sb.append(Character.toString((char) 34));
+			if (colocarAspas(params[i][0]))	sb.append(Character.toString((char) 34));
 			if (i < params.length - 1)	sb.append(",");
 		}
 		sb.append("}");    	
@@ -97,6 +105,57 @@ public class SugarClient {
     	return sb.toString();
     }
     
+    public boolean colocarAspas(String name) {
+    	boolean ret = true;
+		if(name.equals("select_fields")) {
+			ret = false;
+		} else if(name.equals("link_name_to_fields_array")) {
+			ret = false;
+		} else if(name.equals("max_results")) {
+			ret = false;			
+		} else if(name.equals("Favorites")) {
+			ret = false;
+		}    	
+    	return ret;
+    }
+
+    public String toRestData(String params[][][]) {
+		StringBuffer sb = new StringBuffer();
+		
+		for (int i = 0; i < params.length; i++) {
+			sb.append("{");
+			for (int j = 0; j < params[i].length; j++) {
+				sb.append(Character.toString((char) 34));
+				sb.append(params[i][j][0]);
+				sb.append(Character.toString((char) 34));
+				sb.append(":");
+				sb.append(Character.toString((char) 34));
+				sb.append(params[i][j][1]);
+				sb.append(Character.toString((char) 34));
+				if (i < params[i].length - 1)	sb.append(",");
+			}
+			sb.append("}");			
+			if (i < params.length - 1)	sb.append(",");
+		}
+    	
+    	return sb.toString();
+    }
+
+    public String toArrayData(String params[]) {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("[");
+		for (int i = 0; i < params.length; i++) {
+			sb.append(Character.toString((char) 34));
+			sb.append(params[i]);
+			sb.append(Character.toString((char) 34));
+			if (i < params.length - 1)	sb.append(",");
+		}
+		sb.append("]");    	
+    	
+    	return sb.toString();
+    }
+
 	public static String httpPost(String urlStr) throws Exception {
 		URL url = new URL(urlStr);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -106,6 +165,8 @@ public class SugarClient {
 		conn.setUseCaches(false);
 		conn.setAllowUserInteraction(false);
 		conn.setRequestProperty("Content-Type",	"application/x-www-form-urlencoded");
+		conn.setRequestProperty("charset", "utf-8");  
+		//conn.setRequestProperty("Content-Length", "" + Integer.toString(urlStr.getBytes().length));  		
 
 		if (conn.getResponseCode() != 200) {
 			throw new IOException(conn.getResponseMessage());
