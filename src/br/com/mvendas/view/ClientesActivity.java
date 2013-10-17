@@ -1,5 +1,6 @@
-package br.com.example.mvendas;
+package br.com.mvendas.view;
 
+import br.com.example.mvendas.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

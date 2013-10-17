@@ -1,13 +1,12 @@
-package br.com.example.mvendas;
+package br.com.mvendas.view;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
-import br.com.comunication.mvendas.Equipamento;
-import br.com.comunication.mvendas.RestClient;
-import br.com.comunication.mvendas.SoapClient;
-import br.com.comunication.mvendas.SugarClient;
+import br.com.example.mvendas.R;
+import br.com.mvendas.comunication.SugarClientSingleton;
+import br.com.mvendas.dao.EquipamentoDao;
 
 public class ListarClientesActivity extends Activity implements Runnable {
 	
@@ -28,27 +27,39 @@ public class ListarClientesActivity extends Activity implements Runnable {
 	public void testarWS() {
     	
 		testarClientSugar();
-		//testarClientRest();    	    	
-		//testarClientSoap();		
     	dialog.dismiss();
 	}
 	
+	/**
+	 * 
+	 */
 	private void testarClientSugar() {
+		String sitio = "";
+		String equipamento_id = "";
+		String status         = "";
 		// Criando um objeto do tipo SugarClient
-		SugarClient sc = new SugarClient("http://10.0.2.2/sugardev/service/v2/rest.php");
-		String sitio = "FS001"; 
+		SugarClientSingleton sc = SugarClientSingleton.getInstance("http://10.0.2.2/sugardev/service/v2/rest.php");
 		try {
 			// Entrando no sistema
 			String session = sc.login("fotomonitor", "fotomon");			
-			Log.i("info", session);
+			Log.i("info", "sessao = " + session);
 			// Criando um objeto do tipo Equipamento
-			Equipamento equipamento = new Equipamento(sc);
+			EquipamentoDao equipamento = new EquipamentoDao(sc);
 			// Recuperando o id e status atual
-			String equipamento_id = equipamento.recuperarId(sitio);
-			String status         = equipamento.recuperarStatus(equipamento_id);
+			sitio = "FS001";
+			equipamento_id = equipamento.recuperarId(sitio);
+//			Log.i("Info", "Sitio: " + sitio);
+//			Log.i("Info", "ID: " + equipamento_id);
+			
+/*			sitio = "FS005";
+			equipamento_id = equipamento.recuperarId(sitio);
+			Log.i("Info", "Sitio: " + sitio);
+			Log.i("Info", "ID: " + equipamento_id);			
+*/			
+			status = equipamento.recuperarStatus(equipamento_id);
 			// Verificando o status para poder alternar entre ativo e inativo
 			String novo_status;
-			if (status == "ativo") {
+			if (status.equals("ativo")) {
 			      novo_status = "Inativo";
 			} else {
 			      novo_status = "ativo";
@@ -58,15 +69,15 @@ public class ListarClientesActivity extends Activity implements Runnable {
 			// Exibindo id, sitio, status anterior e atual
 			Log.i("Info", "ID: " + equipamento_id);
 			Log.i("Info", "Sitio: " + sitio);
-			//Log.i("Info", "Status Anterior: " + status);
-			//Log.i("Info", "Status Atual...: " + novo_status);
+			Log.i("Info", "Status Anterior: " + status);
+			Log.i("Info", "Status Atual...: " + novo_status);
 			// Recuperando o registro pelo id
 			//registro = equipamento.recuperarRegistro(equipamento_id);
+			equipamento.recuperarRegistroBy("name in ('FS001','FS005')");
 			// Exibindo id, sitio, status anterior e atual
 			//Log.i("Info", "Endereco: " + registro.endereco.value);
 			// Saindo do sistema
-			//sc.logout();
-			
+			sc.logout();
 		} catch (Exception e) {
 			Log.e("Erro", "testarClienteSugar com erro");
 			e.getMessage();
@@ -74,22 +85,5 @@ public class ListarClientesActivity extends Activity implements Runnable {
 		}
 	}
 
-	@SuppressWarnings("unused")
-	private void testarClientRest() {
-		// Array de String que recebe o JSON do Web Service
-		String[] jsonResult = new RestClient().get("http://www.cheesejedi.com/rest_services/get_big_cheese?level=1");
-		
-		Log.i("JSON", "Result: " + jsonResult[0] + " : " + jsonResult[1]);	        
-	}
-
-	@SuppressWarnings("unused")
-	private void testarClientSoap() {
-		Log.i("teste", "Iniciando o uso do KSOAP ...");    	
-		
-		SoapClient soap = new SoapClient();
-		soap.listarClientes();
-				
-    	Log.i("teste", "Finalizando o uso do KSOAP");
-	}
 
 }

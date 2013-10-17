@@ -30,7 +30,7 @@
         android:theme="@style/AppTheme" 
         android:debuggable="true" >
         <activity
-            android:name="br.com.example.mvendas.MainActivity"
+            android:name="br.com.mvendas.view.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,11 +38,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ClientesActivity"
+            android:name="br.com.mvendas.view.ClientesActivity"
             android:label="@string/clientes" >
         </activity>
         <activity
-            android:name=".ListarClientesActivity"
+            android:name="br.com.mvendas.view.ListarClientesActivity"
             android:label="@string/listar_clientes" >
         </activity>       
     
