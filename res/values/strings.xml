@@ -15,5 +15,9 @@
     <string name="buscar_cliente_cnpj">Buscar por CPF/CNPJ</string>
     <string name="dado_busca_cliente">Informe o código ou CPF/CNPJ do cliente</string>
     <string name="cliente_codigo">Código</string>
+    <string name="equipamento">Equipamento</string>
+    <string name="equipamentos">Equipamentos</string>
+    <string name="listar_equipamentos">Listar Equipamentos</string>
+    <string name="buscar_equipamento">Buscar Equipamento</string>
 
 </resources>

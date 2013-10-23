@@ -1,25 +1,26 @@
 package br.com.mvendas.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import android.util.Log;
 import br.com.mvendas.comunication.SugarClientSingleton;
+import br.com.mvendas.model.Equipamento;
 
 public class EquipamentoDao {
-
+	
 	private SugarClientSingleton sc;
 	private String session;
 
-	public EquipamentoDao(SugarClientSingleton sc) {
-		this.sc = sc;
-		this.session = this.sc.getSessionId();
+	public EquipamentoDao() {	
+		sc = SugarClientSingleton.getInstance();
+		session = sc.getSessionId();		
 	}
+
 
 	public String recuperarId(String sitio) {
 		String equipamento_id = "";
@@ -97,11 +98,6 @@ public class EquipamentoDao {
 
 	public String atualizarStatus(String id, String status)	{
 		// Definindo os parametros para chamar o método web
-		/*
-		"name_value_list":[
-		{"name":"id","value":"431847da-9b3c-847e-ca18-4f0c27d443d0"},
-		{"name":"status","value":"ativo"}]
-		*/
 		String name_value_list[][][] = {
 			{{"name", "id"}, {"value", id}},
 			{{"name", "status"}, {"value", status}}				
@@ -118,9 +114,10 @@ public class EquipamentoDao {
 		return result;
 	}
 
-	public void recuperarRegistroBy(String where) {
-		//String equipamento_id = "";
-		String fields[] = {"name, status, endereco"};
+	public List<Equipamento> listar(String where) {
+		List<Equipamento> equipamentos = new ArrayList<Equipamento>();
+
+		String fields[] = {"name", "status", "endereco"};
 		String select_fields = this.sc.toArrayData(fields);
 		
 		// Definindo os parametros para chamar o método web
@@ -139,55 +136,47 @@ public class EquipamentoDao {
 					
 		// Chamando o método web
 		String result = this.sc.call("get_entry_list", parameters);
-		
+
 		// Tratando o retorno para devolver apenas a lista
 		String split[];
 		int result_count = 0;
-		String entry_list, entry_list2;
-		String name_value_list;
-		String name_value_field;
+		String entry_list;
+		String name_value_list, name_value_field, value;
+		String resultFields[];
 		try {
 			split = result.split(",", 3);
 			result_count = Integer.parseInt(split[0].split(":")[1]);
 			entry_list = split[2];
-			entry_list2 = entry_list.split(":", 1)[1];
-			name_value_list = entry_list2.split(",", 3).toString();
-			name_value_field = name_value_list.split(",", 3).toString();
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		JSONObject jsonResult = null;
-		JSONArray jsonEntryList = null;
-		String entryList = null;
-		JSONObject jsonEntryList2 = null;
-		String nameValueList = "";
-		JSONArray jsonNameValueList = null;
-		JSONObject jsonNameValueField = null;
-		String name, value;
-		ArrayList <NameValuePair> equipamentos = new ArrayList<NameValuePair>();		
-		try {
-			jsonResult 		= (JSONObject) new JSONTokener(result).nextValue();
-			jsonEntryList	= jsonResult.getJSONArray("entry_list");			
-			for (int i = 0; i < jsonEntryList.length(); i++) {
-				entryList 			= jsonEntryList.get(i).toString();
-				jsonEntryList2		= (JSONObject) new JSONTokener(entryList).nextValue();
-				jsonNameValueList 		= jsonEntryList2.getJSONArray("name_value_list");
-				//jsonNameValueList   = (JSONArray) new JSONTokener(toJSONObject(jsonNameValueList)).nextValue();
-				for (int j = 0; j < jsonNameValueList.length(); j++) {
-					jsonNameValueField	= (JSONObject) jsonNameValueList.get(j);
-					name		 		= jsonNameValueField.getString("name").toString();
-					value				= jsonNameValueField.getString("value").toString();
-					equipamentos.add(new BasicNameValuePair("name", name));
-					equipamentos.add(new BasicNameValuePair("value", value));				
-				}				
+			entry_list = entry_list.substring(14);			
+			for (int i = 1; i < result_count + 1; i++) {
+				name_value_list = entry_list.split("name_value_list")[i].substring(2);
+				name_value_list = name_value_list.split("\\}\\}\\}")[0];	
+
+				List<String> values = new ArrayList<String>();				
+				for (int j = 0; j < 3; j++) {
+					name_value_field = name_value_list.split("\\},", 3)[j] + "}";
+					name_value_field = name_value_field.substring(iif(j==0,1,0));
+					name_value_field = name_value_field.split("\\}")[0];
+					resultFields = name_value_field.split("\\:");
+					value = resultFields[3];
+					values.add(value);				
+				}
+				Equipamento equipamento = new Equipamento(fields, values);
+				equipamentos.add(equipamento);				
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}		
-		
-		return;
+		} catch (Exception e) {
+			Log.e("info", e.toString());
+		}
+
+		return equipamentos;
+	}
+
+	private static int iif(Boolean arg, int seVerdadeiro, int seFalso) {
+		if (arg) {
+			return seVerdadeiro;
+		} else {
+			return seFalso;
+		}
 	}
 
 }

@@ -10,31 +10,43 @@
     tools:context=".MainActivity" >
 
     <Button
+        android:id="@+id/btProdutos"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignLeft="@+id/btBuscarEquipamento"
+        android:layout_centerVertical="true"
+        android:text="@string/produtos"
+        android:textSize="@dimen/activity_main_buttons" />
+
+    <Button
         android:id="@+id/btClientes"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
         android:onClick="clientesClick"
         android:text="@string/clientes"
         android:textSize="@dimen/activity_main_buttons" />
 
     <Button
-        android:id="@+id/btProdutos"
+        android:id="@+id/btBuscarEquipamento"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:layout_alignLeft="@+id/btClientes"
         android:layout_below="@+id/btClientes"
-        android:layout_marginTop="24dp"
-        android:text="@string/produtos"
+        android:layout_marginTop="19dp"
+        android:onClick="equipamentosClick"
+        android:text="@string/equipamentos"
         android:textSize="@dimen/activity_main_buttons" />
 
     <Button
         android:id="@+id/btOrcamentos"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:layout_alignLeft="@+id/btProdutos"
         android:layout_below="@+id/btProdutos"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="25dp"
         android:text="@string/orcamentos"
         android:textSize="@dimen/activity_main_buttons" />
 

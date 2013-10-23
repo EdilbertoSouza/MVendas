@@ -1,5 +1,7 @@
 package br.com.mvendas.model;
 
+import java.util.List;
+
 public class Equipamento {
 
 	private String id;
@@ -8,8 +10,22 @@ public class Equipamento {
 	private String status;
 	private String endereco;
 	
-	public Equipamento(String id) {
-		this.id = id;
+	public Equipamento(String[] campos, List<String> valores) {
+		String chave;
+		String valor;
+		for (int i = 0; i < campos.length; i++) {
+			chave = campos[i];
+			valor = valores.get(i);
+			if(chave.equalsIgnoreCase("id")){
+				setId(valor);
+			} if(chave.equalsIgnoreCase("name")){
+				setName(valor);
+			} if(chave.equalsIgnoreCase("status")){
+				setStatus(valor);
+			} if(chave.equalsIgnoreCase("endereco")){
+				setEndereco(valor);
+			}			
+		}
 	}
 
 	public String getId() {

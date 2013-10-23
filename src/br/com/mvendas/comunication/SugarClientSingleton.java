@@ -25,7 +25,7 @@ import android.util.Log;
 
 public class SugarClientSingleton {
 
-	private String url;
+	private String url = "http://10.0.2.2/sugardev/service/v2/rest.php";
 	private String session;
 	private static SugarClientSingleton instance;
 
@@ -38,13 +38,11 @@ public class SugarClientSingleton {
 	 * Construtor da classe 
 	 * @param string url com o endereço do webservice REST (ponto de entrada)
 	 */
-	private SugarClientSingleton(String url)  {
-		this.url = url;
-	}
+	private SugarClientSingleton() { }
 			
-	public static SugarClientSingleton getInstance(String url) {
+	public static SugarClientSingleton getInstance() {
 		if (instance == null) {
-			instance = new SugarClientSingleton(url);
+			instance = new SugarClientSingleton();
 		}
 		return instance;
 	}
