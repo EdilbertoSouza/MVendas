@@ -27,16 +27,18 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int Button01=0x7f080001;
-        public static final int Button02=0x7f080000;
         public static final int LinearLayout1=0x7f080007;
-        public static final int action_settings=0x7f08000a;
+        public static final int action_settings=0x7f08000c;
+        public static final int adapter_equipamento_item_tvItem=0x7f08000b;
+        public static final int btBuscarEquipamento=0x7f080001;
         public static final int btClientes=0x7f080002;
-        public static final int btOrcamentos=0x7f080009;
-        public static final int btProdutos=0x7f080008;
+        public static final int btListarEquipamentos=0x7f080000;
+        public static final int btOrcamentos=0x7f08000a;
+        public static final int btProdutos=0x7f080009;
         public static final int button1=0x7f080005;
         public static final int button2=0x7f080006;
         public static final int editText1=0x7f080004;
+        public static final int lvEquipamentos=0x7f080008;
         public static final int textView1=0x7f080003;
     }
     public static final class layout {
@@ -44,7 +46,10 @@ public final class R {
         public static final int activity_clientes_buscar=0x7f030001;
         public static final int activity_clientes_dados=0x7f030002;
         public static final int activity_clientes_listar=0x7f030003;
-        public static final int activity_main=0x7f030004;
+        public static final int activity_equipamentos=0x7f030004;
+        public static final int activity_equipamentos_listar=0x7f030005;
+        public static final int activity_main=0x7f030006;
+        public static final int adapter_equipamento_item=0x7f030007;
     }
     public static final class menu {
         public static final int main=0x7f070000;
@@ -55,12 +60,16 @@ public final class R {
         public static final int buscar_cliente=0x7f050007;
         public static final int buscar_cliente_cnpj=0x7f05000b;
         public static final int buscar_cliente_codigo=0x7f05000a;
+        public static final int buscar_equipamento=0x7f050011;
         public static final int cliente=0x7f050009;
         public static final int cliente_codigo=0x7f05000d;
         public static final int clientes=0x7f050003;
         public static final int dado_busca_cliente=0x7f05000c;
+        public static final int equipamento=0x7f05000e;
+        public static final int equipamentos=0x7f05000f;
         public static final int hello_world=0x7f050002;
         public static final int listar_clientes=0x7f050006;
+        public static final int listar_equipamentos=0x7f050010;
         public static final int orcamentos=0x7f050005;
         public static final int produtos=0x7f050004;
         public static final int voltar_tela=0x7f050008;

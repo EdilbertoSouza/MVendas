@@ -7,15 +7,30 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
+
+    <!-- Permissao para acessar a internet -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <!-- Permissao para vibrar -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Permissao para fazer chamadas -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!-- Permissao para escrever no cartao de memoria -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Permissoes para enviar SMS -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" 
+        android:debuggable="true" >
         <activity
-            android:name="br.com.example.mvendas.MainActivity"
+            android:name="br.com.mvendas.view.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,14 +38,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ClientesActivity"
+            android:name="br.com.mvendas.view.ClientesActivity"
             android:label="@string/clientes" >
         </activity>
         <activity
-            android:name=".ListarClientesActivity"
+            android:name="br.com.mvendas.view.ListarClientesActivity"
             android:label="@string/listar_clientes" >
         </activity>       
-    
+        <activity
+            android:name="br.com.mvendas.view.EquipamentosActivity"
+            android:label="@string/equipamentos" >
+        </activity>
+        <activity
+            android:name="br.com.mvendas.view.ListarEquipamentosActivity"
+            android:label="@string/listar_equipamentos" >
+        </activity>       
+        
     </application>
     
 </manifest>
