@@ -129,7 +129,7 @@ public class EquipamentoDao {
 			{"offset", "0"},
 			{"select_fields", select_fields}, 
 			{"link_name_to_fields_array", "[]"}, 
-			{"max_results", "3"},
+			{"max_results", "15"},
 			{"deleted", "0"},
 			{"Favorites", "false"}
 		};
