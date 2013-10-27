@@ -28,17 +28,12 @@ public class SugarClientSingleton {
 	private String url = "http://10.0.2.2/sugardev/service/v2/rest.php";
 	private String session;
 	private static SugarClientSingleton instance;
-
 /*	
 	private String user;
 	private String session;
 	private String pass;
 */
-	/**
-	 * Construtor da classe 
-	 * @param string url com o endereço do webservice REST (ponto de entrada)
-	 */
-	private SugarClientSingleton() { }
+	private SugarClientSingleton() {}
 			
 	public static SugarClientSingleton getInstance() {
 		if (instance == null) {
@@ -59,11 +54,13 @@ public class SugarClientSingleton {
 		json2.put("application", "application_name");
 
 		String restdata = json2.toString();
-		String data = httpPost(this.url+"?method=login&input_type=json&response_type=json&rest_data="+restdata);
-		//String data = httpPost("login", restdata);
+		String data = httpPost(url+"?method=login&input_type=json&response_type=json&rest_data="+restdata);
 		JSONObject jsonData = (JSONObject) new JSONTokener(data).nextValue();	
-		this.session = jsonData.getString("id");
-		return this.session;
+		session = jsonData.getString("id");
+		
+		Log.i("info", "sessao = " + session);
+		
+		return session;
 	}
 
 	public String encryptor(String password) {
@@ -96,24 +93,21 @@ public class SugarClientSingleton {
     public void logout() {
 		// Definindo os parametros para chamar o método web
 		String parameters[][] = {
-			{"session", this.session}
+			{"session", session}
 		};
 		// Chamando o método web
-		String result = this.call("logout", parameters);
+		String result = call("logout", parameters);
 		Log.i("info", "logout efetuado - result = " + result);
     }	
 	
 	public String getSessionId() {
-		return this.session;
+		return session;
 	}
 	
     public String call(String method, String parameters[][]) {
     	String restData = toRestData(parameters);
-        //String request = this.url+"?method="+method+"&input_type=json&response_type=json&rest_data="+restData;
         String result = "";
-        //Log.i("info", "request = " + request);
         try {
-			//result = httpPost(request);
         	result = httpPost(method, restData);
 		} catch (Exception e) {
 			e.printStackTrace();

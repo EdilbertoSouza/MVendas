@@ -21,15 +21,14 @@ public class EquipamentoDao {
 		session = sc.getSessionId();		
 	}
 
-
 	public String recuperarId(String sitio) {
 		String equipamento_id = "";
 		
 		// Definindo os parametros para chamar o método web
 		String fields[] = {"id"};
-		String select_fields = this.sc.toArrayData(fields);
+		String select_fields = sc.toArrayData(fields);
 		String parameters[][] = { 
-			{"session", this.session}, 
+			{"session", session}, 
 			{"module_name", "os_Equipamentos"},
 			{"query", "name='" + sitio + "'"},
 			{"order_by", ""},
@@ -42,7 +41,7 @@ public class EquipamentoDao {
 		};
 					
 		// Chamando o método web
-		String result = this.sc.call("get_entry_list", parameters);
+		String result = sc.call("get_entry_list", parameters);
 		
 		// Tratando o retorno para devolver apenas o id
 		try {
@@ -79,7 +78,7 @@ public class EquipamentoDao {
 		};
 
 		// Chamando o método web
-		String result = this.sc.call("get_entry_list", parameters);
+		String result = sc.call("get_entry_list", parameters);
 
 		// Tratando o retorno para devolver apenas o id
 		try {
@@ -102,15 +101,15 @@ public class EquipamentoDao {
 			{{"name", "id"}, {"value", id}},
 			{{"name", "status"}, {"value", status}}				
 		};
-		String value_list = this.sc.toRestData(name_value_list);
+		String value_list = sc.toRestData(name_value_list);
 		
 		String parameters[][] = {
-				{"session", this.session}, 
+				{"session", session}, 
 				{"module_name", "os_Equipamentos"},
 				{"name_value_list", value_list}
 		};
 		// Chamando o método web
-		String result = this.sc.call("set_entry", parameters);
+		String result = sc.call("set_entry", parameters);
 		return result;
 	}
 
@@ -118,24 +117,24 @@ public class EquipamentoDao {
 		List<Equipamento> equipamentos = new ArrayList<Equipamento>();
 
 		String fields[] = {"name", "status", "endereco"};
-		String select_fields = this.sc.toArrayData(fields);
+		String select_fields = sc.toArrayData(fields);
 		
 		// Definindo os parametros para chamar o método web
 		String parameters[][] = { 
-			{"session", this.session}, 
+			{"session", session}, 
 			{"module_name", "os_Equipamentos"},
 			{"query", where},
 			{"order_by", ""},
 			{"offset", "0"},
 			{"select_fields", select_fields}, 
 			{"link_name_to_fields_array", "[]"}, 
-			{"max_results", "15"},
+			{"max_results", "10"},
 			{"deleted", "0"},
 			{"Favorites", "false"}
 		};
 					
 		// Chamando o método web
-		String result = this.sc.call("get_entry_list", parameters);
+		String result = sc.call("get_entry_list", parameters);
 
 		// Tratando o retorno para devolver apenas a lista
 		String split[];
@@ -165,6 +164,7 @@ public class EquipamentoDao {
 				equipamentos.add(equipamento);				
 			}
 		} catch (Exception e) {
+			Log.e("info", "Erro ao tratar retorno");
 			Log.e("info", e.toString());
 		}
 

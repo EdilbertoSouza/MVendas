@@ -66,7 +66,7 @@ public class ListAdapterEquipamentos extends RoboBaseAdapter {
 		View view = super.getView(position, convertView, parent);
 		
 		Equipamento equipamento = (Equipamento) getItem(position);
-		adapter_equipamento_item_tvItem.setText(equipamento.getName());
+		adapter_equipamento_item_tvItem.setText(equipamento.getName() + " - " + equipamento.getEndereco());
 		
 		return view;
 	}

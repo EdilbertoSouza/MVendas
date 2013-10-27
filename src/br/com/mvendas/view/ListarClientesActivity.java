@@ -21,7 +21,7 @@ public class ListarClientesActivity extends Activity implements Runnable {
 		setContentView(R.layout.activity_clientes_listar);
 				
 		dialog = ProgressDialog.show(ListarClientesActivity.this, "", "Listando Clientes...", true); 
-		new Thread(this).start();		
+		new Thread(this).start();
 	}
 	
 	// Método da classe Runnable, executa ao iniciar a classe.	
@@ -31,8 +31,9 @@ public class ListarClientesActivity extends Activity implements Runnable {
 	}
 	
 	/**
-	 * 
+	 *  Apenas teste
 	 */
+	@SuppressWarnings("unused")
 	private void testarClientSugar() {
 		String sitio = "";
 		String equipamento_id = "";
