@@ -43,7 +43,7 @@ public class MainActivity extends Activity implements Runnable {
 			sc.login("fotomonitor", "fotomon");
 		} catch (Exception e) {
 			Log.e("info", "Erro ao efetuar Login");
-		}
+		}		
 		dialog.dismiss();
 	}
 
@@ -70,7 +70,6 @@ public class MainActivity extends Activity implements Runnable {
 	private OnClickListener btEquipamentosOnClickListener = new OnClickListener() {
 	    @Override
 	    public void onClick(View v) {
-	        //Toast.makeText(MainActivity.this, "Equipamentos", Toast.LENGTH_LONG).show();
 	    	equipamentosClick(v);
 	    }
 	};

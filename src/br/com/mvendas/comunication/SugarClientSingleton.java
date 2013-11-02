@@ -58,7 +58,7 @@ public class SugarClientSingleton {
 		JSONObject jsonData = (JSONObject) new JSONTokener(data).nextValue();	
 		session = jsonData.getString("id");
 		
-		Log.i("info", "sessao = " + session);
+		Log.i("info", "Login Efetuado - Sessao = " + session);
 		
 		return session;
 	}
@@ -97,7 +97,7 @@ public class SugarClientSingleton {
 		};
 		// Chamando o método web
 		String result = call("logout", parameters);
-		Log.i("info", "logout efetuado - result = " + result);
+		Log.i("info", "Logout Efetuado - Result = " + result);
     }	
 	
 	public String getSessionId() {

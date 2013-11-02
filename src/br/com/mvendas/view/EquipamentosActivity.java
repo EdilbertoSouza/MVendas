@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import br.com.example.mvendas.R;
-import br.com.mvendas.adapter.ListAdapterEquipamentos;
+import br.com.mvendas.adapter.EquipamentosListAdapter;
 import br.com.mvendas.comunication.SugarClientSingleton;
 import br.com.mvendas.dao.EquipamentoDao;
 import br.com.mvendas.model.Equipamento;
@@ -22,7 +22,7 @@ import com.google.inject.Inject;
 @ContentView(R.layout.activity_equipamentos_listar)
 public class EquipamentosActivity extends RoboActivity implements OnItemClickListener {
 	
-	private ListAdapterEquipamentos adapter;
+	private EquipamentosListAdapter adapter;
 		
 	@Inject
 	private EquipamentoDao equipamentoDao;
@@ -37,7 +37,7 @@ public class EquipamentosActivity extends RoboActivity implements OnItemClickLis
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Instancia o Adapter
-		adapter = new ListAdapterEquipamentos(getApplicationContext(),
+		adapter = new EquipamentosListAdapter(getApplicationContext(),
 				R.layout.adapter_equipamento_item, null);
 		// Configura o ListView
 		lvEquipamentos.setClickable(true);

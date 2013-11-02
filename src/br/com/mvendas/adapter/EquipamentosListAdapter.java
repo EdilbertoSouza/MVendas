@@ -11,7 +11,7 @@ import android.widget.TextView;
 import br.com.example.mvendas.R;
 import br.com.mvendas.model.Equipamento;
 
-public class ListAdapterEquipamentos extends RoboBaseAdapter {
+public class EquipamentosListAdapter extends RoboBaseAdapter {
 	
 	@InjectView(R.id.adapter_equipamento_item_tvItem)
 	private TextView adapter_equipamento_item_tvItem;
@@ -19,7 +19,7 @@ public class ListAdapterEquipamentos extends RoboBaseAdapter {
 
 	private List<Equipamento> equipamentos;
 
-	public ListAdapterEquipamentos(Context context, int layoutId, List<Equipamento> equipamentos) {
+	public EquipamentosListAdapter(Context context, int layoutId, List<Equipamento> equipamentos) {
 		super(context, layoutId);
 		
 		this.equipamentos = (equipamentos == null) ? new ArrayList<Equipamento>() : equipamentos;

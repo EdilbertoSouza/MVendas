@@ -42,10 +42,6 @@
             android:label="@string/clientes" >
         </activity>
         <activity
-            android:name="br.com.mvendas.view.ListarClientesActivity"
-            android:label="@string/listar_clientes" >
-        </activity>       
-        <activity
             android:name="br.com.mvendas.view.EquipamentosActivity"
             android:label="@string/equipamentos" >
         </activity>        
