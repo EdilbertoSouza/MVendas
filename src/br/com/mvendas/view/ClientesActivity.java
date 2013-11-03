@@ -59,7 +59,7 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		try {
 			// Criando um objeto do tipo Cliente
 			ClienteDao clienteDao = new ClienteDao();
-			clientes = clienteDao.listar("accounts.name like '%AMC%'");
+			clientes = clienteDao.listar("accounts.name like '%A%'");
 		} catch (Exception e) {
 			Log.e("Info", "Erro ao Listar Clientes");
 			Log.e("Info", e.toString());

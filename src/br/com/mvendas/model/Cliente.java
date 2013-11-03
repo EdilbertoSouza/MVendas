@@ -30,13 +30,47 @@ public class Cliente {
 					setId(valor);
 				} if(chave.equalsIgnoreCase("name")){
 					setName(valor);
-				} if(chave.equalsIgnoreCase("street")){
+				} if(chave.equalsIgnoreCase("billing_address_street")){
 					setStreet(valor);
-				} if(chave.equalsIgnoreCase("city")){
+				} if(chave.equalsIgnoreCase("billing_address_city")){
 					setCity(valor);
-				} if(chave.equalsIgnoreCase("state")){
+				} if(chave.equalsIgnoreCase("billing_address_state")){
 					setState(valor);
-				} if(chave.equalsIgnoreCase("phone")){
+				} if(chave.equalsIgnoreCase("phone_office")){
+					setPhone(valor);
+				} if(chave.equalsIgnoreCase("email")){
+					setEmail(valor);
+				} if(chave.equalsIgnoreCase("website")){
+					setWebsite(valor);
+				}			
+			}			
+		} catch (Exception e) {
+			Log.e("info", "Erro ao criar objeto Cliente");
+		}
+	}
+
+	public Cliente(String[] campos, String[] valores) {
+		String chave;
+		String valor;
+		try {
+			for (int i = 0; i < campos.length; i++) {
+				chave = campos[i];
+				if (i < valores.length) {
+					valor = valores[i];
+				} else {
+					valor = "";
+				}
+				if(chave.equalsIgnoreCase("id")){
+					setId(valor);
+				} if(chave.equalsIgnoreCase("name")){
+					setName(valor);
+				} if(chave.equalsIgnoreCase("billing_address_street")){
+					setStreet(valor);
+				} if(chave.equalsIgnoreCase("billing_address_city")){
+					setCity(valor);
+				} if(chave.equalsIgnoreCase("billing_address_state")){
+					setState(valor);
+				} if(chave.equalsIgnoreCase("phone_office")){
 					setPhone(valor);
 				} if(chave.equalsIgnoreCase("email")){
 					setEmail(valor);

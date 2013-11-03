@@ -172,6 +172,17 @@ public class ClienteDao {
 		return clientes;
 	}
 
+	/*
+	public List<Cliente> listarMock() {
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		String[] fields = {"name", "billing_address_street", "billing_address_city", "billing_address_state", "phone_office"};
+		String[] values = {"NAGEM", "Av. Washington Soares, 100", "Fortaleza", "CE", "88448122"};
+		Cliente cliente = new Cliente(fields, values);
+		clientes.add(cliente);
+		return clientes;
+	}
+	*/
+
 	private static int iif(Boolean arg, int seVerdadeiro, int seFalso) {
 		if (arg) {
 			return seVerdadeiro;

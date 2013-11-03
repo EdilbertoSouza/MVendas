@@ -14,8 +14,7 @@ import br.com.mvendas.model.Equipamento;
 public class EquipamentosListAdapter extends RoboBaseAdapter {
 	
 	@InjectView(R.id.adapter_equipamento_item_tvItem)
-	private TextView adapter_equipamento_item_tvItem;
-	
+	private TextView adapter_equipamento_item_tvItem;	
 
 	private List<Equipamento> equipamentos;
 

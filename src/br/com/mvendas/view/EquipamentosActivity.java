@@ -13,7 +13,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import br.com.example.mvendas.R;
 import br.com.mvendas.adapter.EquipamentosListAdapter;
-import br.com.mvendas.comunication.SugarClientSingleton;
 import br.com.mvendas.dao.EquipamentoDao;
 import br.com.mvendas.model.Equipamento;
 
@@ -83,6 +82,7 @@ public class EquipamentosActivity extends RoboActivity implements OnItemClickLis
 		}
 	}
 
+	/*
 	@SuppressWarnings("unused")
 	private void testarClientSugar() {
 		String sitio = "";
@@ -120,5 +120,5 @@ public class EquipamentosActivity extends RoboActivity implements OnItemClickLis
 			e.printStackTrace();
 		}
 	}
-
+	*/
 }

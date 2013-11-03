@@ -15,7 +15,6 @@ public class ClientesListAdapter extends RoboBaseAdapter {
 	
 	@InjectView(R.id.adapter_cliente_item_tvItem)
 	private TextView adapter_cliente_item_tvItem;
-	
 
 	private List<Cliente> clientes;
 
@@ -48,7 +47,7 @@ public class ClientesListAdapter extends RoboBaseAdapter {
 		this.clientes.add(clientes);
 	}
 	
-	public void addAll(List<Cliente> Clientes) {
+	public void addAll(List<Cliente> clientes) {
 		this.clientes = (clientes == null) ? new ArrayList<Cliente>() : clientes;
 	}
 	
@@ -66,7 +65,7 @@ public class ClientesListAdapter extends RoboBaseAdapter {
 		View view = super.getView(position, convertView, parent);
 		
 		Cliente cliente = (Cliente) getItem(position);
-		adapter_cliente_item_tvItem.setText(cliente.getName() + " - " + cliente.getStreet());
+		adapter_cliente_item_tvItem.setText(cliente.getName());
 		
 		return view;
 	}
