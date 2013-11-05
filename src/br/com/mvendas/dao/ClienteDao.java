@@ -155,9 +155,9 @@ public class ClienteDao {
 				for (int j = 0; j < 3; j++) {
 					name_value_field = name_value_list.split("\\},", 3)[j] + "}";
 					name_value_field = name_value_field.substring(iif(j==0,1,0));
-					name_value_field = name_value_field.split("\\}")[0];
+					name_value_field = name_value_field.split("\\}")[0];					
 					resultFields = name_value_field.split("\\:");
-					value = resultFields[3];
+					value = resultFields[3].replace(Character.toString((char) 34), "");
 					values.add(value);				
 				}
 				Cliente cliente = new Cliente(fields, values);
@@ -189,6 +189,10 @@ public class ClienteDao {
 		} else {
 			return seFalso;
 		}
+	}
+
+	public void salvarOuAlterar(Cliente cliente) {
+		
 	}
 
 }

@@ -157,7 +157,7 @@ public class EquipamentoDao {
 					name_value_field = name_value_field.substring(iif(j==0,1,0));
 					name_value_field = name_value_field.split("\\}")[0];
 					resultFields = name_value_field.split("\\:");
-					value = resultFields[3];
+					value = resultFields[3].replace(Character.toString((char) 34), "");
 					values.add(value);				
 				}
 				Equipamento equipamento = new Equipamento(fields, values);

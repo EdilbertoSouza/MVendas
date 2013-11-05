@@ -2,6 +2,8 @@ package br.com.mvendas.model;
 
 import java.util.List;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 public class Cliente {
@@ -83,6 +85,20 @@ public class Cliente {
 		}
 	}
 
+	public Cliente(String id, String nome, String telefone, String endereco,
+			String cidade, String estado) {
+		setId(id);
+		setName(nome);
+		setPhone(telefone);
+		setStreet(endereco);
+		setCity(cidade);
+		setState(estado);		
+	}
+	
+	public Cliente(Parcel in) {
+		readFromParcel(in);
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -146,5 +162,42 @@ public class Cliente {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-		
+
+	//////////////////////////////////////////////////////////////
+	// Parcelable
+	
+	public int describeContents() {
+		return 0;
+	}
+	
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(id);
+		//dest.writeParcelable(foto, flags);
+		dest.writeString(name);
+		dest.writeString(phone);
+		dest.writeString(street);
+		dest.writeString(city);
+		dest.writeString(state);
+	}
+	
+	private void readFromParcel(Parcel in) {
+		id = in.readString();
+		//foto = in.readParcelable(Bitmap.class.getClassLoader());
+		name = in.readString();
+		phone = in.readString();
+		street = in.readString();
+		city = in.readString();
+		state = in.readString();
+	}
+
+	public static final Parcelable.Creator<Cliente> CREATOR = new Parcelable.Creator<Cliente>() {
+		public Cliente createFromParcel(Parcel in) {
+			return new Cliente(in);
+		}
+
+		public Cliente[] newArray(int size) {
+			return new Cliente[size];
+		}
+	};
+
 }

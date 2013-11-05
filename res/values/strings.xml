@@ -4,7 +4,7 @@
     <string name="app_name">MVendas</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="clientes">Clientes</string>
+    <string name="clientes">Clientes</string>    
     <string name="produtos">Produtos</string>
     <string name="orcamentos">Orçamentos</string>
     <string name="listar_clientes">Listar Clientes</string>
@@ -18,6 +18,15 @@
     <string name="equipamento">Equipamento</string>
     <string name="equipamentos">Equipamentos</string>
     <string name="listar_equipamentos">Listar Equipamentos</string>
-    <string name="buscar_equipamento">Buscar Equipamento</string>
+    <string name="buscar_equipamento">Buscar Equipamento</string> 
+    <string name="telefone">Fone</string>
+    <string name="endereco">Endereço</string>
+    <string name="cidade">Cidade</string>
+    <string name="estado">Estado</string>
+    <string name="salvar">Salvar</string>
+    <string name="btEnviar">Enviar</string>
 
+    <string name="menu_novo">Novo</string>
+    <string name="menu_buscar">Buscar</string>
+    
 </resources>
