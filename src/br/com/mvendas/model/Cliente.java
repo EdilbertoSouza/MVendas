@@ -1,12 +1,9 @@
 package br.com.mvendas.model;
 
-import java.util.List;
-
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
-public class Cliente {
+public class Cliente implements Parcelable {
 
 	private String id;
 	private String name;
@@ -17,74 +14,6 @@ public class Cliente {
 	private String email;
 	private String website;
 	
-	public Cliente(String[] campos, List<String> valores) {
-		String chave;
-		String valor;
-		try {
-			for (int i = 0; i < campos.length; i++) {
-				chave = campos[i];
-				if (i < valores.size()) {
-					valor = valores.get(i);
-				} else {
-					valor = "";
-				}
-				if(chave.equalsIgnoreCase("id")){
-					setId(valor);
-				} if(chave.equalsIgnoreCase("name")){
-					setName(valor);
-				} if(chave.equalsIgnoreCase("billing_address_street")){
-					setStreet(valor);
-				} if(chave.equalsIgnoreCase("billing_address_city")){
-					setCity(valor);
-				} if(chave.equalsIgnoreCase("billing_address_state")){
-					setState(valor);
-				} if(chave.equalsIgnoreCase("phone_office")){
-					setPhone(valor);
-				} if(chave.equalsIgnoreCase("email")){
-					setEmail(valor);
-				} if(chave.equalsIgnoreCase("website")){
-					setWebsite(valor);
-				}			
-			}			
-		} catch (Exception e) {
-			Log.e("info", "Erro ao criar objeto Cliente");
-		}
-	}
-
-	public Cliente(String[] campos, String[] valores) {
-		String chave;
-		String valor;
-		try {
-			for (int i = 0; i < campos.length; i++) {
-				chave = campos[i];
-				if (i < valores.length) {
-					valor = valores[i];
-				} else {
-					valor = "";
-				}
-				if(chave.equalsIgnoreCase("id")){
-					setId(valor);
-				} if(chave.equalsIgnoreCase("name")){
-					setName(valor);
-				} if(chave.equalsIgnoreCase("billing_address_street")){
-					setStreet(valor);
-				} if(chave.equalsIgnoreCase("billing_address_city")){
-					setCity(valor);
-				} if(chave.equalsIgnoreCase("billing_address_state")){
-					setState(valor);
-				} if(chave.equalsIgnoreCase("phone_office")){
-					setPhone(valor);
-				} if(chave.equalsIgnoreCase("email")){
-					setEmail(valor);
-				} if(chave.equalsIgnoreCase("website")){
-					setWebsite(valor);
-				}			
-			}			
-		} catch (Exception e) {
-			Log.e("info", "Erro ao criar objeto Cliente");
-		}
-	}
-
 	public Cliente(String id, String nome, String telefone, String endereco,
 			String cidade, String estado) {
 		setId(id);
@@ -99,6 +28,34 @@ public class Cliente {
 		readFromParcel(in);
 	}
 	
+	public Cliente(String cliente) {
+		
+		String[] linhas = cliente.split(";");
+		
+		for (int i = 0; i < linhas.length; i++) {
+			String [] split = linhas[i].toString().split("=");
+			String chave = split[0];
+			String valor = split[1];
+			if(chave.equalsIgnoreCase("id")){
+				setId(valor);
+			} if(chave.equalsIgnoreCase("name")){
+				setName(valor);
+			} if(chave.equalsIgnoreCase("billing_address_street")){
+				setStreet(valor);
+			} if(chave.equalsIgnoreCase("billing_address_city")){
+				setCity(valor);
+			} if(chave.equalsIgnoreCase("billing_address_state")){
+				setState(valor);
+			} if(chave.equalsIgnoreCase("phone_office")){
+				setPhone(valor);
+			} if(chave.equalsIgnoreCase("email")){
+				setEmail(valor);
+			} if(chave.equalsIgnoreCase("website")){
+				setWebsite(valor);
+			}			
+		}
+	}
+
 	public String getId() {
 		return id;
 	}

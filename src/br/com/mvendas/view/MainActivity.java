@@ -43,6 +43,8 @@ public class MainActivity extends Activity implements Runnable {
 			sc.login("fotomonitor", "fotomon");
 		} catch (Exception e) {
 			Log.e("info", "Erro ao efetuar Login");
+			Log.e("info", e.toString());
+			//Toast.makeText(MainActivity.this, "SugarCRM Não Conectado", Toast.LENGTH_LONG).show();
 		}		
 		dialog.dismiss();
 	}

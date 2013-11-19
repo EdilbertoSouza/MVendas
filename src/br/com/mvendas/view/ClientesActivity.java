@@ -158,10 +158,21 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		try {
 			// Criando um objeto do tipo Cliente
 			ClienteDao clienteDao = new ClienteDao();
-			clientes = clienteDao.listar("accounts.name like '%A%'");
+			clientes = clienteDao.listar("accounts.account_type = 'Prospect'");
 		} catch (Exception e) {
 			Log.e("Info", "Erro ao Listar Clientes");
 			Log.e("Info", e.toString());
+
+			AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			alert.setTitle("Atenção");
+			alert.setMessage("Não foi possível listar os clientes. Motivo: " + e.getMessage());			
+			alert.setPositiveButton("Ok", new OnClickListener() {				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});						
+			alert.show();			
 		}
     	return clientes;
 	}
@@ -173,7 +184,7 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 	}
 
 	private void localizarEndereco(final Cliente selecionado) {
-		String endereco = selecionado.getStreet().trim();
+		String endereco = selecionado.getStreet().trim() + ",Fortaleza,CE";
 		endereco = endereco.replace(" ", "+");
 		
 		Uri uri = Uri.parse("geo:0,0?q=" + endereco);
@@ -222,10 +233,10 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 	}
 	
 	private void editar(Cliente cliente) {
-		if(cliente != null){
-			//String idStr = String.valueOf(cliente.getId());			
+		if(cliente != null){			
+			//String id = cliente.getId();			
 			Intent it = new Intent(this, ClientesFormActivity.class);
-			//it.putExtra(ClientesFormActivity.INTENT_EXTRA_DATA_CLIENTE, cliente);			
+			it.putExtra(ClientesFormActivity.INTENT_EXTRA_DATA_CLIENTE, cliente);			
 			startActivity(it);
 		}
 	}

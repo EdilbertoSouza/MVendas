@@ -66,7 +66,6 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 		Intent it = getIntent();
 		Cliente cliente = it.getParcelableExtra(INTENT_EXTRA_DATA_CLIENTE);
 		setCliente(cliente);
-
 	}
 
 	/**
@@ -76,8 +75,7 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	public void onClick(View v) {
 		if(v == btSalvar){
 			Cliente cliente = getCliente();
-//			Log.i("aluno", aluno.toString());			
-			clienteDao.salvarOuAlterar(cliente);
+			clienteDao.salvar(cliente);
 			
 			Toast.makeText(this,
 					cliente.getName() + " salvo com sucesso!!!", 
@@ -135,7 +133,7 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	/**
 	 * Cria um objeto Cliente a partir dos componentes da Tela
 	 * 
-	 * @return Cliente
+	 * @return cliente
 	 */
 	private Cliente getCliente() {
 		String id = "";
@@ -160,7 +158,7 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	/**
 	 * Seta os campos da Tela a partir de um objeto Cliente
 	 * 
-	 * @param aluno
+	 * @param cliente
 	 */
 	private void setCliente(Cliente cliente) {
 		if(cliente != null){

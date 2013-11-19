@@ -1,7 +1,5 @@
 package br.com.mvendas.model;
 
-import java.util.List;
-
 import android.util.Log;
 
 public class Equipamento {
@@ -12,13 +10,13 @@ public class Equipamento {
 	private String status;
 	private String endereco;
 	
-	public Equipamento(String[] campos, List<String> valores) {
-		String chave;
-		String valor;
+	public Equipamento(String string) {
+		String[] linhas = string.split(";");
 		try {
-			for (int i = 0; i < campos.length; i++) {
-				chave = campos[i];
-				valor = valores.get(i);
+			for (int i = 0; i < linhas.length; i++) {
+				String [] split = linhas[i].toString().split("=");
+				String chave = split[0];
+				String valor = split[1];
 				if(chave.equalsIgnoreCase("id")){
 					setId(valor);
 				} if(chave.equalsIgnoreCase("name")){
@@ -28,7 +26,7 @@ public class Equipamento {
 				} if(chave.equalsIgnoreCase("endereco")){
 					setEndereco(valor);
 				}			
-			}			
+			}
 		} catch (Exception e) {
 			Log.e("info", "Erro ao criar objeto Equipamento");
 		}

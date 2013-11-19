@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import android.util.Log;
 import br.com.mvendas.comunication.SugarClientSingleton;
 import br.com.mvendas.model.Equipamento;
 
@@ -128,7 +127,7 @@ public class EquipamentoDao {
 			{"offset", "0"},
 			{"select_fields", select_fields}, 
 			{"link_name_to_fields_array", "[]"}, 
-			{"max_results", "10"},
+			{"max_results", "20"},
 			{"deleted", "0"},
 			{"Favorites", "false"}
 		};
@@ -136,47 +135,14 @@ public class EquipamentoDao {
 		// Chamando o método web
 		String result = sc.call("get_entry_list", parameters);
 
-		// Tratando o retorno para devolver apenas a lista
-		String split[];
-		int result_count = 0;
-		String entry_list;
-		String name_value_list, name_value_field, value;
-		String resultFields[];
-		try {
-			split = result.split(",", 3);
-			result_count = Integer.parseInt(split[0].split(":")[1]);
-			entry_list = split[2];
-			entry_list = entry_list.substring(14);			
-			for (int i = 1; i < result_count + 1; i++) {
-				name_value_list = entry_list.split("name_value_list")[i].substring(2);
-				name_value_list = name_value_list.split("\\}\\}\\}")[0];	
-
-				List<String> values = new ArrayList<String>();				
-				for (int j = 0; j < 3; j++) {
-					name_value_field = name_value_list.split("\\},", 3)[j] + "}";
-					name_value_field = name_value_field.substring(iif(j==0,1,0));
-					name_value_field = name_value_field.split("\\}")[0];
-					resultFields = name_value_field.split("\\:");
-					value = resultFields[3].replace(Character.toString((char) 34), "");
-					values.add(value);				
-				}
-				Equipamento equipamento = new Equipamento(fields, values);
-				equipamentos.add(equipamento);				
-			}
-		} catch (Exception e) {
-			Log.e("info", "Erro ao tratar retorno");
-			Log.e("info", e.toString());
+		// Tratando o retorno para devolver a lista
+		String [] split = result.split("---");
+		for (int i = 0; i < split.length; i++) {
+			Equipamento equipamento = new Equipamento(split[i]);
+			equipamentos.add(equipamento);			
 		}
 
 		return equipamentos;
 	}
-
-	private static int iif(Boolean arg, int seVerdadeiro, int seFalso) {
-		if (arg) {
-			return seVerdadeiro;
-		} else {
-			return seFalso;
-		}
-	}
-
+	
 }

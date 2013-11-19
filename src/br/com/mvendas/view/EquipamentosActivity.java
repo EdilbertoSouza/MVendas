@@ -59,7 +59,7 @@ public class EquipamentosActivity extends RoboActivity implements OnItemClickLis
 		try {
 			// Criando um objeto do tipo Equipamento
 			EquipamentoDao equipamentoDao = new EquipamentoDao();
-			equipamentos = equipamentoDao.listar("name like 'FS00%'");
+			equipamentos = equipamentoDao.listar("name like 'FS%'");
 		} catch (Exception e) {
 			Log.e("Info", "Erro ao Listar Equipamentos");
 			Log.e("Info", e.toString());
