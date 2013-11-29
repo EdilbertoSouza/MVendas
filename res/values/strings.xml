@@ -11,12 +11,12 @@
     <string name="buscar_cliente">Buscar Cliente</string>
     <string name="voltar_tela">Voltar</string>
     <string name="cliente">Cliente</string>
-    <string name="buscar_cliente_codigo">Buscar por Código</string>
-    <string name="buscar_cliente_cnpj">Buscar por CPF/CNPJ</string>
-    <string name="dado_busca_cliente">Informe o código ou CPF/CNPJ do cliente</string>
+    <string name="buscar">Buscar</string>
+    <string name="dado_busca_cliente">Informe o nome ou parte do nome do Cliente</string>
     <string name="cliente_codigo">Código</string>
     <string name="equipamento">Equipamento</string>
     <string name="equipamentos">Equipamentos</string>
+    <string name="contatos">Contatos</string>    
     <string name="listar_equipamentos">Listar Equipamentos</string>
     <string name="buscar_equipamento">Buscar Equipamento</string> 
     <string name="telefone">Fone</string>
@@ -28,5 +28,6 @@
 
     <string name="menu_novo">Novo</string>
     <string name="menu_buscar">Buscar</string>
+    <string name="site">Site</string>
     
 </resources>

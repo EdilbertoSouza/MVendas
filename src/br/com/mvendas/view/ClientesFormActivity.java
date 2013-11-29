@@ -47,7 +47,10 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	
 	@InjectView(R.id.etEstado)
 	private EditText etEstado;
-	
+
+	@InjectView(R.id.etSite)
+	private EditText etSite;
+
 	@InjectView(R.id.btSalvar)
 	private Button btSalvar;
 
@@ -150,8 +153,9 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 		String endereco = etEndereco.getText().toString();
 		String cidade = etCidade.getText().toString();
 		String estado = etEstado.getText().toString();
+		String website = etSite.getText().toString();
 		
-		Cliente cliente = new Cliente(id, nome, telefone, endereco, cidade, estado);
+		Cliente cliente = new Cliente(id, nome, telefone, endereco, cidade, estado, website);
 		return cliente;
 	}
 	
@@ -169,6 +173,7 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 			etEndereco.setText(cliente.getStreet());
 			etCidade.setText(cliente.getCity());
 			etEstado.setText(cliente.getState());
+			etSite.setText(cliente.getWebsite());
 		}
 	}
 	

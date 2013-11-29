@@ -3,35 +3,37 @@ package br.com.mvendas.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Cliente implements Parcelable {
+public class Contato implements Parcelable {
 
 	private String id;
 	private String name;
+	private String cargo;
+	private String depto;
 	private String street;
 	private String city;
 	private String state;
 	private String phone;
 	private String email;
-	private String website;
 	
-	public Cliente(String id, String nome, String telefone, String endereco,
-			String cidade, String estado, String website) {
+	public Contato(String id, String nome, String cargo, String depto, String telefone, String endereco,
+			String cidade, String estado) {
 		setId(id);
 		setName(nome);
+		setCargo(cargo);
+		setDepto(depto);
 		setPhone(telefone);
 		setStreet(endereco);
 		setCity(cidade);
 		setState(estado);
-		setWebsite(website);
 	}
 	
-	public Cliente(Parcel in) {
+	public Contato(Parcel in) {
 		readFromParcel(in);
 	}
 	
-	public Cliente(String cliente) {
+	public Contato(String contato) {
 		
-		String[] linhas = cliente.split(";");
+		String[] linhas = contato.split(";");
 		
 		for (int i = 0; i < linhas.length; i++) {
 			String [] split = linhas[i].toString().split("=");
@@ -39,21 +41,21 @@ public class Cliente implements Parcelable {
 			String valor = split[1];
 			if(chave.equalsIgnoreCase("id")){
 				setId(valor);
-			} if(chave.equalsIgnoreCase("name")){
+			} if(chave.equalsIgnoreCase("first_name")){
 				setName(valor);
-			} if(chave.equalsIgnoreCase("billing_address_street")){
+			} if(chave.equalsIgnoreCase("title")){
+				setCargo(valor);
+			} if(chave.equalsIgnoreCase("department")){
+				setDepto(valor);
+			} if(chave.equalsIgnoreCase("primary_address_street")){
 				setStreet(valor);
-			} if(chave.equalsIgnoreCase("billing_address_city")){
+			} if(chave.equalsIgnoreCase("primary_address_city")){
 				setCity(valor);
-			} if(chave.equalsIgnoreCase("billing_address_state")){
+			} if(chave.equalsIgnoreCase("primary_address_state")){
 				setState(valor);
-			} if(chave.equalsIgnoreCase("phone_office")){
+			} if(chave.equalsIgnoreCase("phone_mobile")){
 				setPhone(valor);
-			} if(chave.equalsIgnoreCase("email")){
-				setEmail(valor);
-			} if(chave.equalsIgnoreCase("website")){
-				setWebsite(valor);
-			}			
+			}
 		}
 	}
 
@@ -72,6 +74,21 @@ public class Cliente implements Parcelable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+	public String getDepto() {
+		return depto;
+	}
+
+	public void setDepto(String depto) {
+		this.depto = depto;
+	}	
 
 	public String getStreet() {
 		return street;
@@ -113,14 +130,6 @@ public class Cliente implements Parcelable {
 		this.email = email;
 	}
 
-	public String getWebsite() {
-		return website;
-	}
-
-	public void setWebsite(String website) {
-		this.website = website;
-	}
-
 	//////////////////////////////////////////////////////////////
 	// Parcelable
 	
@@ -132,31 +141,33 @@ public class Cliente implements Parcelable {
 		dest.writeString(id);
 		//dest.writeParcelable(foto, flags);
 		dest.writeString(name);
+		dest.writeString(cargo);
+		dest.writeString(depto);
 		dest.writeString(phone);
 		dest.writeString(street);
 		dest.writeString(city);
 		dest.writeString(state);
-		dest.writeString(website);
 	}
 	
 	private void readFromParcel(Parcel in) {
 		id = in.readString();
 		//foto = in.readParcelable(Bitmap.class.getClassLoader());
 		name = in.readString();
+		cargo = in.readString();
+		depto = in.readString();
 		phone = in.readString();
 		street = in.readString();
 		city = in.readString();
 		state = in.readString();
-		website = in.readString();
 	}
 
-	public static final Parcelable.Creator<Cliente> CREATOR = new Parcelable.Creator<Cliente>() {
-		public Cliente createFromParcel(Parcel in) {
-			return new Cliente(in);
+	public static final Parcelable.Creator<Contato> CREATOR = new Parcelable.Creator<Contato>() {
+		public Contato createFromParcel(Parcel in) {
+			return new Contato(in);
 		}
 
-		public Cliente[] newArray(int size) {
-			return new Cliente[size];
+		public Contato[] newArray(int size) {
+			return new Contato[size];
 		}
 	};
 

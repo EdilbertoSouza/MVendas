@@ -27,59 +27,59 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import br.com.example.mvendas.R;
-import br.com.mvendas.adapter.ClientesListAdapter;
-import br.com.mvendas.dao.ClienteDao;
-import br.com.mvendas.model.Cliente;
+import br.com.mvendas.adapter.ContatosListAdapter;
+import br.com.mvendas.dao.ContatoDao;
+import br.com.mvendas.model.Contato;
 import br.com.mvendas.utils.Sms;
 
 import com.google.inject.Inject;
 
-@ContentView(R.layout.activity_clientes_listar)
-public class ClientesActivity extends RoboActivity implements OnItemClickListener, Runnable {
+@ContentView(R.layout.activity_contatos_listar)
+public class ContatosActivity extends RoboActivity implements OnItemClickListener, Runnable {
 	
-	private ClientesListAdapter adapter;
+	private ContatosListAdapter adapter;
 	private ProgressDialog dialog;
-	private List<Cliente> clientes = null;
+	//private List<Contato> contatos = null;
 		
 	@Inject
-	private ClienteDao clienteDao;
+	private ContatoDao contatoDao;
 
-	@InjectView(R.id.lvClientes)
-	private ListView lvClientes;
+	@InjectView(R.id.lvContatos)
+	private ListView lvContatos;
 
-	@InjectResource(R.array.cliente_menu_opcoes)
+	@InjectResource(R.array.contatos_menu_opcoes)
 	private String [] menu_opcoes;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Instancia o Adapter
-		adapter = new ClientesListAdapter(getApplicationContext(),
-				R.layout.adapter_cliente_item, null);
+		adapter = new ContatosListAdapter(getApplicationContext(),
+				R.layout.adapter_contato_item, null);
 		// Configura o ListView
-		lvClientes.setClickable(true);
-		lvClientes.setOnItemClickListener(this);
-		registerForContextMenu(lvClientes);
+		lvContatos.setClickable(true);
+		lvContatos.setOnItemClickListener(this);
+		registerForContextMenu(lvContatos);
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// Obtem a lista dos clientes do SugarCRM
-		listarClientes();
-		//if (clientes == null) {
-		//	Toast.makeText(ClientesActivity.this, "Não foi possivel recuperar clientes", Toast.LENGTH_LONG).show();
-		//	super.onBackPressed();
-		//} else {
-			// Adiciona os clientes na tela
-			adapter.newList(clientes);
-			lvClientes.setAdapter(adapter);			
-		//}			
+		// Obtem a lista dos contatos do SugarCRM
+		List<Contato> contatos = listarContatos();
+		if (contatos == null) {
+			Toast.makeText(ContatosActivity.this, "Não foi possivel recuperar contatos", Toast.LENGTH_LONG).show();
+			super.onBackPressed();
+		} else {
+			// Adiciona os contatos na tela
+			adapter.newList(contatos);
+			lvContatos.setAdapter(adapter);			
+		}			
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.clientes, menu);
+		getMenuInflater().inflate(R.menu.contatos, menu);
 		return true;
 	}
 	
@@ -88,11 +88,11 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		switch (item.getItemId()) {
 		case R.id.menu_novo:
 			// Inicia a Activity do Formulario
-			startActivity(new Intent(this, ClientesFormActivity.class));			
+			//startActivity(new Intent(this, ContatosFormActivity.class));			
 			break;
 		case R.id.menu_buscar:
 			// Inicia a Activity do Buscar
-			startActivity(new Intent(this, ClientesBuscarActivity.class));			
+			//startActivity(new Intent(this, ContatosBuscarActivity.class));			
 			break;
 		}		
 		return true;
@@ -102,11 +102,11 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
     public void onCreateContextMenu(ContextMenu menu, View v,
     		ContextMenuInfo menuInfo) {
     	
-    	if(v.getId() == R.id.lvClientes){    		
+    	if(v.getId() == R.id.lvContatos){    		
 			AdapterView.AdapterContextMenuInfo info = 
 					(AdapterView.AdapterContextMenuInfo) menuInfo;
-			ClientesListAdapter adapter = (ClientesListAdapter) lvClientes.getAdapter();				
-			menu.setHeaderTitle(adapter.getClientes().get(info.position).getName());
+			ContatosListAdapter adapter = (ContatosListAdapter) lvContatos.getAdapter();				
+			menu.setHeaderTitle(adapter.getContatos().get(info.position).getName());
 			
 			for (int i = 0; i < menu_opcoes.length; i++) {
 				menu.add(Menu.NONE, i, i, menu_opcoes[i]);
@@ -116,17 +116,17 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
     
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-    	ClientesListAdapter adapter = (ClientesListAdapter) lvClientes.getAdapter();				
+    	ContatosListAdapter adapter = (ContatosListAdapter) lvContatos.getAdapter();				
 				
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
 				.getMenuInfo();
-		final Cliente selecionado = adapter.getClientes().get(info.position);
+		final Contato selecionado = adapter.getContatos().get(info.position);
 		
 		int menuItemIndex = item.getItemId();
 		String menuItemName = menu_opcoes[menuItemIndex];
 		
 //		String listItemName = selecionado.getName();
-//		Log.i("info", "cliente " + String.format("Selected %s for item %s", menuItemName, listItemName));
+//		Log.i("info", "contato " + String.format("Selected %s for item %s", menuItemName, listItemName));
 		
 		if(selecionado != null){					
 			if(menuItemName.equalsIgnoreCase("Fazer uma Ligação")){
@@ -138,9 +138,6 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 			} else if(menuItemName.equalsIgnoreCase("Buscar no Mapa")){
 				localizarEndereco(selecionado);
 				
-			} else if(menuItemName.equalsIgnoreCase("Exibir Site")){
-				exibirSite(selecionado);
-
 			} else if(menuItemName.equalsIgnoreCase("Editar")){
 				editar(selecionado);
 							
@@ -152,38 +149,42 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {		
-		Cliente selecionado = (Cliente) adapter.getItem(position);		
+		Contato selecionado = (Contato) adapter.getItem(position);		
 		editar(selecionado);
 	}
 	
-	private void listar() {
-		dialog = ProgressDialog.show(ClientesActivity.this, "",	"Listando Clientes...", true);
+	@SuppressWarnings("unused")
+	private List<Contato> listar() {
+		dialog = ProgressDialog.show(ContatosActivity.this, "",	"Listando Contatos...", true);
 		new Thread(this).start();
+		return null; //contatos;
 	}	
 	
 	@Override
 	public void run() {
-		listar();
+		//contatos = listar();
 		dialog.dismiss();
 	}
 	
-	private void listarClientes() {
+	private List<Contato> listarContatos() {
+		List<Contato> contatos = null;
 		try {
-			// Criando um objeto do tipo Cliente
-			ClienteDao clienteDao = new ClienteDao();
-			clientes = clienteDao.listar("accounts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
+			// Criando um objeto do tipo Contato
+			ContatoDao contatoDao = new ContatoDao();
+			contatos = contatoDao.listar("contacts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
 		} catch (Exception e) {
-			Log.e("Info", "Erro ao Listar Clientes. Motivo: " + e.getMessage());
+			Log.e("Info", "Erro ao Listar Contatos. Motivo: " + e.getMessage());
 		}
+    	return contatos;
 	}
 
-	private void fazerLigacao(final Cliente selecionado) {
+	private void fazerLigacao(final Contato selecionado) {
 		Uri uri = Uri.parse("tel:" + selecionado.getPhone());
 		Intent it = new Intent(Intent.ACTION_CALL, uri);
 		startActivity(it);
 	}
 
-	private void localizarEndereco(final Cliente selecionado) {
+	private void localizarEndereco(final Contato selecionado) {
 		String endereco = selecionado.getStreet().trim() + ",Fortaleza,CE";
 		endereco = endereco.replace(" ", "+");
 		
@@ -192,7 +193,7 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		startActivity(it);
 	}
 
-	private void enviarSms(final Cliente selecionado) {
+	private void enviarSms(final Contato selecionado) {
 		// Obtem a GUI do XML
 		LayoutInflater li = getLayoutInflater();
 		View dialogSms = li.inflate(R.layout.dialog_sms, null);
@@ -232,36 +233,27 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		});
 	}
 	
-	private void exibirSite(Cliente cliente) {
-		if(cliente != null){			
-			String site = cliente.getWebsite();
-			Uri uri = Uri.parse(site);
-			Intent it = new Intent(Intent.ACTION_VIEW, uri);
-			startActivity(it);			
-		}
-	}
-
-	private void editar(Cliente cliente) {
-		if(cliente != null){			
-			//String id = cliente.getId();			
-			Intent it = new Intent(this, ClientesFormActivity.class);
-			it.putExtra(ClientesFormActivity.INTENT_EXTRA_DATA_CLIENTE, cliente);			
-			startActivity(it);
+	private void editar(Contato contato) {
+		if(contato != null){			
+			//String id = contato.getId();			
+			//Intent it = new Intent(this, ContatosFormActivity.class);
+			//it.putExtra(ContatosFormActivity.INTENT_EXTRA_DATA_CONTATO, contato);			
+			//startActivity(it);
 		}
 	}
 
 	/*
-	private void remover(final Cliente cliente) {
-		if(cliente != null){
+	private void remover(final Contato contato) {
+		if(contato != null){
 			
 			AlertDialog.Builder alert = new AlertDialog.Builder(this);
 			alert.setTitle("Confirmação");
-			alert.setMessage("Deseja remover o(a) cliente(a) " + cliente.getName() + "?");
+			alert.setMessage("Deseja remover o(a) contato(a) " + contato.getName() + "?");
 			
 			alert.setPositiveButton("Sim", new OnClickListener() {				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					//clienteDao.deletar(cliente);					
+					//contatoDao.deletar(contato);					
 					onResume();
 				}
 			});

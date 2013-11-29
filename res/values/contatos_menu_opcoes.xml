@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="cliente_menu_opcoes">
+    <string-array name="contatos_menu_opcoes">
         <item name="chamar">Fazer uma Ligação</item>
         <item name="sms">Enviar SMS</item>
         <item name="mapa">Buscar no Mapa</item>
-        <item name="site">Exibir Site</item>
         <item name="editar">Editar</item>
     </string-array>    
 </resources>

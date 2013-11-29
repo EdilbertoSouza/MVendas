@@ -18,26 +18,36 @@
         android:drawableTop="@drawable/clientes"
         android:text="@string/clientes"
         android:textSize="@dimen/activity_main_buttons" />
-    
-    <Button
-        android:id="@+id/btEquipamentos"
-        android:layout_width="140dp"
-        android:layout_height="100dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/btClientes"
-        android:drawableTop="@drawable/equipamentos"
-        android:text="@string/equipamentos"
-        android:textSize="@dimen/activity_main_buttons" />
 
     <Button
         android:id="@+id/btOrcamentos"
         android:layout_width="140dp"
         android:layout_height="100dp"
-        android:layout_alignLeft="@+id/btClientes"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/btClientes"
-        android:layout_marginTop="18dp"
         android:drawableTop="@drawable/orcamentos"
         android:text="@string/orcamentos"
+        android:textSize="@dimen/activity_main_buttons" />
+
+    <Button
+        android:id="@+id/btEquipamentos"
+        android:layout_width="140dp"
+        android:layout_height="100dp"
+        android:layout_alignBaseline="@+id/btOrcamentos"
+        android:layout_alignBottom="@+id/btOrcamentos"
+        android:layout_alignLeft="@+id/btClientes"
+        android:drawableTop="@drawable/equipamentos"
+        android:text="@string/equipamentos"
+        android:textSize="@dimen/activity_main_buttons" />
+
+    <Button
+        android:id="@+id/btContatos"
+        android:layout_width="140dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/btOrcamentos"
+        android:layout_alignLeft="@+id/btOrcamentos"
+        android:drawableTop="@drawable/clientes"
+        android:text="@string/contatos"
         android:textSize="@dimen/activity_main_buttons" />
 
 </RelativeLayout>

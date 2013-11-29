@@ -26,13 +26,16 @@ public class MainActivity extends Activity implements Runnable {
 		Button btClientes = (Button) findViewById(R.id.btClientes);
 		btClientes.setOnClickListener(btClientesOnClickListener);
 
+		Button btContatos = (Button) findViewById(R.id.btContatos);
+		btContatos.setOnClickListener(btContatosOnClickListener);
+
 		Button btEquipamentos = (Button) findViewById(R.id.btEquipamentos);
 		btEquipamentos.setOnClickListener(btEquipamentosOnClickListener);
 
 		Button btOrcamentos = (Button) findViewById(R.id.btOrcamentos);
 		btOrcamentos.setOnClickListener(btOrcamentosOnClickListener);
 		
-		dialog = ProgressDialog.show(MainActivity.this, "", "Conectando ao SugarCRM", true);
+		dialog = ProgressDialog.show(MainActivity.this, "Atenção", "Conectando ao SugarCRM " + SugarClientSingleton.host, true);
 		new Thread(this).start();
 	}
 		
@@ -40,12 +43,10 @@ public class MainActivity extends Activity implements Runnable {
 	public void run() {
 		try {
 			sc = SugarClientSingleton.getInstance();
-			sc.login("fotomonitor", "fotomon");
+			sc.login("mvendas", "srlke58x");			
 		} catch (Exception e) {
-			Log.e("info", "Erro ao efetuar Login");
-			Log.e("info", e.toString());
-			//Toast.makeText(MainActivity.this, "SugarCRM Não Conectado", Toast.LENGTH_LONG).show();
-		}		
+			Log.e("info", "run - login " + e.getMessage());
+		}
 		dialog.dismiss();
 	}
 
@@ -53,7 +54,6 @@ public class MainActivity extends Activity implements Runnable {
 	protected void onDestroy() {
         sc.logout();
         sc = null;
-		//Toast.makeText(MainActivity.this, "Logout Efetuado", Toast.LENGTH_LONG).show();
 		super.onDestroy();
 	}
 
@@ -69,6 +69,18 @@ public class MainActivity extends Activity implements Runnable {
 		startActivity(i);		
 	}
 		
+	private OnClickListener btContatosOnClickListener = new OnClickListener() {
+	    @Override
+	    public void onClick(View v) {
+	    	contatosClick(v);
+	    }
+	};
+
+	public void contatosClick(View v) {
+		Intent i = new Intent(this, ContatosActivity.class);
+		startActivity(i);		
+	}
+
 	private OnClickListener btEquipamentosOnClickListener = new OnClickListener() {
 	    @Override
 	    public void onClick(View v) {

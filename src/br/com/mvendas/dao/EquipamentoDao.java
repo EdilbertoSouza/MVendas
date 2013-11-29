@@ -17,7 +17,7 @@ public class EquipamentoDao {
 
 	public EquipamentoDao() {	
 		sc = SugarClientSingleton.getInstance();
-		session = sc.getSessionId();		
+		session = sc.getSession();		
 	}
 
 	public String recuperarId(String sitio) {
