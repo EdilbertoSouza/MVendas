@@ -8,6 +8,7 @@ import android.util.Log;
 import br.com.mvendas.comunication.SugarClientSingleton;
 import br.com.mvendas.model.Contato;
 import br.com.mvendas.utils.Constantes;
+import br.com.mvendas.utils.StringUtil;
 
 public class ContatoDao {
 	
@@ -22,8 +23,8 @@ public class ContatoDao {
 	public List<Contato> listar(String where) throws Exception {
 		List<Contato> contatos = new ArrayList<Contato>();
 
-		String fields[] = {"id", "first_name", "title", "department","primary_address_street", "primary_address_city", "primary_address_state", "phone_mobile"};
-		String select_fields = sc.toArrayData(fields);
+		String fields[] = {"id", "first_name", "last_name", "title", "department","primary_address_street", "primary_address_city", "primary_address_state", "phone_mobile"};
+		String select_fields = StringUtil.toArrayData(fields);
 		
 		// Definindo os parametros para chamar o método web
 		String parameters[][] = { 
@@ -34,7 +35,7 @@ public class ContatoDao {
 			{"offset", "0"},
 			{"select_fields", select_fields}, 
 			{"link_name_to_fields_array", "[]"}, 
-			{"max_results", "3"},
+			{"max_results", "10"},
 			{"deleted", "0"},
 			{"Favorites", "false"}
 		};
@@ -84,13 +85,13 @@ public class ContatoDao {
 			{{"name", "primary_address_street"}, {"value", contato.getStreet()}},
 			{{"name", "primary_address_city"}, {"value", contato.getCity()}},
 			{{"name", "primary_address_state"}, {"value", contato.getState()}},
-			{{"name", "phone_mobile"}, {"value", contato.getPhone()}}				
+			{{"name", "phone_mobile"}, {"value", contato.getPhone()}}
 		};
-		String value_list = sc.toRestData(name_value_list);
+		String value_list = StringUtil.toRestData(name_value_list);
 		
 		String parameters[][] = {
 				{"session", session}, 
-				{"module_name", "Accounts"},
+				{"module_name", "Contacts"},
 				{"name_value_list", value_list}
 		};
 		// Chamando o método web

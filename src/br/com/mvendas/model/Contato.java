@@ -1,12 +1,15 @@
 package br.com.mvendas.model;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Contato implements Parcelable {
 
 	private String id;
+	private Bitmap foto;
 	private String name;
+	private String lastName;
 	private String cargo;
 	private String depto;
 	private String street;
@@ -15,10 +18,11 @@ public class Contato implements Parcelable {
 	private String phone;
 	private String email;
 	
-	public Contato(String id, String nome, String cargo, String depto, String telefone, String endereco,
-			String cidade, String estado) {
+	public Contato(String id, Bitmap foto, String nome, String lastName, String cargo, String depto, 
+			String telefone, String endereco, String cidade, String estado) {
 		setId(id);
 		setName(nome);
+		setLastName(lastName);
 		setCargo(cargo);
 		setDepto(depto);
 		setPhone(telefone);
@@ -43,6 +47,8 @@ public class Contato implements Parcelable {
 				setId(valor);
 			} if(chave.equalsIgnoreCase("first_name")){
 				setName(valor);
+			} if(chave.equalsIgnoreCase("last_name")){
+				setLastName(valor);
 			} if(chave.equalsIgnoreCase("title")){
 				setCargo(valor);
 			} if(chave.equalsIgnoreCase("department")){
@@ -67,6 +73,14 @@ public class Contato implements Parcelable {
 		this.id = id;
 	}
 
+	public Bitmap getFoto() {
+		return foto;
+	}
+
+	public void setFoto(Bitmap foto) {
+		this.foto = foto;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -74,6 +88,15 @@ public class Contato implements Parcelable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	public String getCargo() {
 		return cargo;
 	}
@@ -139,8 +162,9 @@ public class Contato implements Parcelable {
 	
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(id);
-		//dest.writeParcelable(foto, flags);
+		dest.writeParcelable(foto, flags);
 		dest.writeString(name);
+		dest.writeString(lastName);
 		dest.writeString(cargo);
 		dest.writeString(depto);
 		dest.writeString(phone);
@@ -151,8 +175,9 @@ public class Contato implements Parcelable {
 	
 	private void readFromParcel(Parcel in) {
 		id = in.readString();
-		//foto = in.readParcelable(Bitmap.class.getClassLoader());
+		foto = in.readParcelable(Bitmap.class.getClassLoader());
 		name = in.readString();
+		lastName = in.readString();
 		cargo = in.readString();
 		depto = in.readString();
 		phone = in.readString();

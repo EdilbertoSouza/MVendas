@@ -7,7 +7,6 @@ import roboguice.inject.ContentView;
 import roboguice.inject.InjectResource;
 import roboguice.inject.InjectView;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -35,11 +34,10 @@ import br.com.mvendas.utils.Sms;
 import com.google.inject.Inject;
 
 @ContentView(R.layout.activity_contatos_listar)
-public class ContatosActivity extends RoboActivity implements OnItemClickListener, Runnable {
+public class ContatosActivity extends RoboActivity implements OnItemClickListener {
 	
 	private ContatosListAdapter adapter;
-	private ProgressDialog dialog;
-	//private List<Contato> contatos = null;
+	private List<Contato> contatos = null;
 		
 	@Inject
 	private ContatoDao contatoDao;
@@ -54,8 +52,7 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Instancia o Adapter
-		adapter = new ContatosListAdapter(getApplicationContext(),
-				R.layout.adapter_contato_item, null);
+		adapter = new ContatosListAdapter(getApplicationContext(), R.layout.adapter_contato_item, null);
 		// Configura o ListView
 		lvContatos.setClickable(true);
 		lvContatos.setOnItemClickListener(this);
@@ -66,7 +63,7 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 	protected void onResume() {
 		super.onResume();
 		// Obtem a lista dos contatos do SugarCRM
-		List<Contato> contatos = listarContatos();
+		listarContatos();
 		if (contatos == null) {
 			Toast.makeText(ContatosActivity.this, "Não foi possivel recuperar contatos", Toast.LENGTH_LONG).show();
 			super.onBackPressed();
@@ -88,7 +85,7 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 		switch (item.getItemId()) {
 		case R.id.menu_novo:
 			// Inicia a Activity do Formulario
-			//startActivity(new Intent(this, ContatosFormActivity.class));			
+			startActivity(new Intent(this, ContatosFormActivity.class));
 			break;
 		case R.id.menu_buscar:
 			// Inicia a Activity do Buscar
@@ -99,9 +96,7 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 	}
     
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-    		ContextMenuInfo menuInfo) {
-    	
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {    	
     	if(v.getId() == R.id.lvContatos){    		
 			AdapterView.AdapterContextMenuInfo info = 
 					(AdapterView.AdapterContextMenuInfo) menuInfo;
@@ -152,30 +147,14 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 		Contato selecionado = (Contato) adapter.getItem(position);		
 		editar(selecionado);
 	}
-	
-	@SuppressWarnings("unused")
-	private List<Contato> listar() {
-		dialog = ProgressDialog.show(ContatosActivity.this, "",	"Listando Contatos...", true);
-		new Thread(this).start();
-		return null; //contatos;
-	}	
-	
-	@Override
-	public void run() {
-		//contatos = listar();
-		dialog.dismiss();
-	}
-	
-	private List<Contato> listarContatos() {
-		List<Contato> contatos = null;
+		
+	private void listarContatos() { // List<Contato>
 		try {
-			// Criando um objeto do tipo Contato
 			ContatoDao contatoDao = new ContatoDao();
 			contatos = contatoDao.listar("contacts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
 		} catch (Exception e) {
 			Log.e("Info", "Erro ao Listar Contatos. Motivo: " + e.getMessage());
-		}
-    	return contatos;
+		}		
 	}
 
 	private void fazerLigacao(final Contato selecionado) {
@@ -235,10 +214,10 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 	
 	private void editar(Contato contato) {
 		if(contato != null){			
-			//String id = contato.getId();			
-			//Intent it = new Intent(this, ContatosFormActivity.class);
-			//it.putExtra(ContatosFormActivity.INTENT_EXTRA_DATA_CONTATO, contato);			
-			//startActivity(it);
+			//String id = contato.getId();
+			Intent it = new Intent(this, ContatosFormActivity.class);
+			it.putExtra(ContatosFormActivity.INTENT_EXTRA_DATA_CONTATO, contato);			
+			startActivity(it);
 		}
 	}
 

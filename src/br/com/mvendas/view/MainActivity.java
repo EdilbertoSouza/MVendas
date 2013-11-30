@@ -35,7 +35,7 @@ public class MainActivity extends Activity implements Runnable {
 		Button btOrcamentos = (Button) findViewById(R.id.btOrcamentos);
 		btOrcamentos.setOnClickListener(btOrcamentosOnClickListener);
 		
-		dialog = ProgressDialog.show(MainActivity.this, "Atenção", "Conectando ao SugarCRM " + SugarClientSingleton.host, true);
+		dialog = ProgressDialog.show(MainActivity.this, "", "Conectando ao SugarCRM...", true);
 		new Thread(this).start();
 	}
 		
@@ -43,7 +43,7 @@ public class MainActivity extends Activity implements Runnable {
 	public void run() {
 		try {
 			sc = SugarClientSingleton.getInstance();
-			sc.login("mvendas", "srlke58x");			
+			sc.login("mvendas", "srlke58x");				
 		} catch (Exception e) {
 			Log.e("info", "run - login " + e.getMessage());
 		}

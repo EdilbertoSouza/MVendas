@@ -7,7 +7,6 @@ import roboguice.inject.ContentView;
 import roboguice.inject.InjectResource;
 import roboguice.inject.InjectView;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -35,10 +34,9 @@ import br.com.mvendas.utils.Sms;
 import com.google.inject.Inject;
 
 @ContentView(R.layout.activity_clientes_listar)
-public class ClientesActivity extends RoboActivity implements OnItemClickListener, Runnable {
+public class ClientesActivity extends RoboActivity implements OnItemClickListener {
 	
 	private ClientesListAdapter adapter;
-	private ProgressDialog dialog;
 	private List<Cliente> clientes = null;
 		
 	@Inject
@@ -54,8 +52,7 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Instancia o Adapter
-		adapter = new ClientesListAdapter(getApplicationContext(),
-				R.layout.adapter_cliente_item, null);
+		adapter = new ClientesListAdapter(getApplicationContext(), R.layout.adapter_cliente_item, null);
 		// Configura o ListView
 		lvClientes.setClickable(true);
 		lvClientes.setOnItemClickListener(this);
@@ -67,14 +64,14 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		super.onResume();
 		// Obtem a lista dos clientes do SugarCRM
 		listarClientes();
-		//if (clientes == null) {
-		//	Toast.makeText(ClientesActivity.this, "Não foi possivel recuperar clientes", Toast.LENGTH_LONG).show();
-		//	super.onBackPressed();
-		//} else {
+		if (clientes == null) {
+			Toast.makeText(ClientesActivity.this, "Não foi possivel recuperar clientes", Toast.LENGTH_LONG).show();
+			super.onBackPressed();
+		} else {
 			// Adiciona os clientes na tela
 			adapter.newList(clientes);
 			lvClientes.setAdapter(adapter);			
-		//}			
+		}			
 	}
 
 	@Override
@@ -156,22 +153,10 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		editar(selecionado);
 	}
 	
-	private void listar() {
-		dialog = ProgressDialog.show(ClientesActivity.this, "",	"Listando Clientes...", true);
-		new Thread(this).start();
-	}	
-	
-	@Override
-	public void run() {
-		listar();
-		dialog.dismiss();
-	}
-	
 	private void listarClientes() {
 		try {
-			// Criando um objeto do tipo Cliente
 			ClienteDao clienteDao = new ClienteDao();
-			clientes = clienteDao.listar("accounts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
+			clientes = clienteDao.listar("Accounts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
 		} catch (Exception e) {
 			Log.e("Info", "Erro ao Listar Clientes. Motivo: " + e.getMessage());
 		}

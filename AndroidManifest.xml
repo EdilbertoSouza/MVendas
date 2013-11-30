@@ -56,6 +56,10 @@
             android:label="@string/contatos" >
         </activity>
         <activity
+            android:name="br.com.mvendas.view.ContatosFormActivity"
+            android:label="@string/contato" >
+        </activity>
+        <activity
             android:name="br.com.mvendas.view.EquipamentosActivity"
             android:label="@string/equipamentos" >
         </activity>        

@@ -7,6 +7,7 @@ import roboguice.inject.InjectView;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.example.mvendas.R;
 import br.com.mvendas.model.Contato;
@@ -15,6 +16,9 @@ public class ContatosListAdapter extends RoboBaseAdapter {
 	
 	@InjectView(R.id.adapter_contato_item_tvItem)
 	private TextView adapter_contato_item_tvItem;
+
+	@InjectView(R.id.adapter_contato_item_ivItem)
+	private ImageView adapter_contato_item_ivItem;
 
 	private List<Contato> contatos;
 
@@ -65,7 +69,8 @@ public class ContatosListAdapter extends RoboBaseAdapter {
 		View view = super.getView(position, convertView, parent);
 		
 		Contato contato = (Contato) getItem(position);
-		adapter_contato_item_tvItem.setText(contato.getName() + contato.getCargo());
+		//adapter_contato_item_ivItem.setImageBitmap(contato.getFoto());
+		adapter_contato_item_tvItem.setText(contato.getName() + " - " + contato.getCargo());
 		
 		return view;
 	}

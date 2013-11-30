@@ -9,6 +9,7 @@ import org.json.JSONTokener;
 
 import br.com.mvendas.comunication.SugarClientSingleton;
 import br.com.mvendas.model.Equipamento;
+import br.com.mvendas.utils.StringUtil;
 
 public class EquipamentoDao {
 	
@@ -25,7 +26,7 @@ public class EquipamentoDao {
 		
 		// Definindo os parametros para chamar o método web
 		String fields[] = {"id"};
-		String select_fields = sc.toArrayData(fields);
+		String select_fields = StringUtil.toArrayData(fields);
 		String parameters[][] = { 
 			{"session", session}, 
 			{"module_name", "os_Equipamentos"},
@@ -62,7 +63,7 @@ public class EquipamentoDao {
 		
 		// Definindo os parametros para chamar o método web
 		String fields[] = {"status"};
-		String select_fields = this.sc.toArrayData(fields);
+		String select_fields = StringUtil.toArrayData(fields);
 		String parameters[][] = {
 			{"session", this.session}, 
 			{"module_name", "os_Equipamentos"},
@@ -100,7 +101,7 @@ public class EquipamentoDao {
 			{{"name", "id"}, {"value", id}},
 			{{"name", "status"}, {"value", status}}				
 		};
-		String value_list = sc.toRestData(name_value_list);
+		String value_list = StringUtil.toRestData(name_value_list);
 		
 		String parameters[][] = {
 				{"session", session}, 
@@ -116,7 +117,7 @@ public class EquipamentoDao {
 		List<Equipamento> equipamentos = new ArrayList<Equipamento>();
 
 		String fields[] = {"name", "status", "endereco"};
-		String select_fields = sc.toArrayData(fields);
+		String select_fields = StringUtil.toArrayData(fields);
 		
 		// Definindo os parametros para chamar o método web
 		String parameters[][] = { 

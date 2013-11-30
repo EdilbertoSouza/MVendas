@@ -8,6 +8,7 @@ import android.util.Log;
 import br.com.mvendas.comunication.SugarClientSingleton;
 import br.com.mvendas.model.Cliente;
 import br.com.mvendas.utils.Constantes;
+import br.com.mvendas.utils.StringUtil;
 
 public class ClienteDao {
 	
@@ -23,7 +24,7 @@ public class ClienteDao {
 		List<Cliente> clientes = new ArrayList<Cliente>();
 
 		String fields[] = {"id", "name", "billing_address_street", "billing_address_city", "billing_address_state", "phone_office", "website"};
-		String select_fields = sc.toArrayData(fields);
+		String select_fields = StringUtil.toArrayData(fields);
 		
 		// Definindo os parametros para chamar o método web
 		String parameters[][] = { 
@@ -89,7 +90,7 @@ public class ClienteDao {
 			{{"name", "phone_office"}, {"value", cliente.getPhone()}},
 			{{"name", "website"}, {"value", cliente.getWebsite()}}				
 		};
-		String value_list = sc.toRestData(name_value_list);
+		String value_list = StringUtil.toRestData(name_value_list);
 		
 		String parameters[][] = {
 				{"session", session}, 
