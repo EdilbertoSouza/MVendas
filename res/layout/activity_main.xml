@@ -20,15 +20,15 @@
         android:textSize="@dimen/activity_main_buttons" />
 
     <Button
-        android:id="@+id/btOrcamentos"
+        android:id="@+id/btContatos"
         android:layout_width="140dp"
         android:layout_height="100dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/btClientes"
-        android:drawableTop="@drawable/orcamentos"
-        android:text="@string/orcamentos"
+        android:layout_above="@+id/btOrcamentos"
+        android:layout_alignLeft="@+id/btOrcamentos"
+        android:drawableTop="@drawable/clientes"
+        android:text="@string/contatos"
         android:textSize="@dimen/activity_main_buttons" />
-
+    
     <Button
         android:id="@+id/btEquipamentos"
         android:layout_width="140dp"
@@ -39,15 +39,15 @@
         android:drawableTop="@drawable/equipamentos"
         android:text="@string/equipamentos"
         android:textSize="@dimen/activity_main_buttons" />
-
+    
     <Button
-        android:id="@+id/btContatos"
+        android:id="@+id/btOrcamentos"
         android:layout_width="140dp"
         android:layout_height="100dp"
-        android:layout_above="@+id/btOrcamentos"
-        android:layout_alignLeft="@+id/btOrcamentos"
-        android:drawableTop="@drawable/clientes"
-        android:text="@string/contatos"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btClientes"
+        android:drawableTop="@drawable/orcamentos"
+        android:text="@string/orcamentos"
         android:textSize="@dimen/activity_main_buttons" />
 
 </RelativeLayout>

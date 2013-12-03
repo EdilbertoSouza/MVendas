@@ -37,7 +37,6 @@ import com.google.inject.Inject;
 public class ContatosActivity extends RoboActivity implements OnItemClickListener {
 	
 	private ContatosListAdapter adapter;
-	private List<Contato> contatos = null;
 		
 	@Inject
 	private ContatoDao contatoDao;
@@ -63,7 +62,7 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 	protected void onResume() {
 		super.onResume();
 		// Obtem a lista dos contatos do SugarCRM
-		listarContatos();
+		List<Contato> contatos = listarContatos();
 		if (contatos == null) {
 			Toast.makeText(ContatosActivity.this, "Não foi possivel recuperar contatos", Toast.LENGTH_LONG).show();
 			super.onBackPressed();
@@ -71,7 +70,7 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 			// Adiciona os contatos na tela
 			adapter.newList(contatos);
 			lvContatos.setAdapter(adapter);			
-		}			
+		}
 	}
 
 	@Override
@@ -119,10 +118,7 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 		
 		int menuItemIndex = item.getItemId();
 		String menuItemName = menu_opcoes[menuItemIndex];
-		
-//		String listItemName = selecionado.getName();
-//		Log.i("info", "contato " + String.format("Selected %s for item %s", menuItemName, listItemName));
-		
+				
 		if(selecionado != null){					
 			if(menuItemName.equalsIgnoreCase("Fazer uma Ligação")){
 				fazerLigacao(selecionado);
@@ -148,13 +144,15 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 		editar(selecionado);
 	}
 		
-	private void listarContatos() { // List<Contato>
+	private List<Contato> listarContatos() {
+		List<Contato> contatos = null;
 		try {
 			ContatoDao contatoDao = new ContatoDao();
 			contatos = contatoDao.listar("contacts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
 		} catch (Exception e) {
 			Log.e("Info", "Erro ao Listar Contatos. Motivo: " + e.getMessage());
-		}		
+		}
+		return contatos;
 	}
 
 	private void fazerLigacao(final Contato selecionado) {

@@ -14,20 +14,25 @@
     <string name="buscar">Buscar</string>
     <string name="dado_busca_cliente">Informe o nome ou parte do nome do Cliente</string>
     <string name="cliente_codigo">Código</string>
-    <string name="equipamento">Equipamento</string>
-    <string name="equipamentos">Equipamentos</string>
-    <string name="contatos">Contatos</string>    
+    <string name="equipamento">Produto</string>
+    <string name="equipamentos">Produtos</string>
+    <string name="contatos">Contatos</string>
+    <string name="contato">Contato</string>
     <string name="listar_equipamentos">Listar Equipamentos</string>
     <string name="buscar_equipamento">Buscar Equipamento</string> 
     <string name="telefone">Fone</string>
     <string name="endereco">Endereço</string>
     <string name="cidade">Cidade</string>
     <string name="estado">Estado</string>
+    <string name="cargo">Cargo</string>
+    <string name="depto">Departamento</string>    
     <string name="salvar">Salvar</string>
     <string name="btEnviar">Enviar</string>
 
     <string name="menu_novo">Novo</string>
     <string name="menu_buscar">Buscar</string>
     <string name="site">Site</string>
+    <string name="nome">Nome</string>
+    <string name="sobrenome">Sobrenome</string>
     
 </resources>

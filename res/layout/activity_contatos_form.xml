@@ -1,0 +1,188 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true" >
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="442dp"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".ContatosFormActivity" >
+
+        <TextView
+            android:id="@+id/tvId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/adapter_contato_item_tvItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tvId"
+            android:text="@string/nome" />
+
+        <EditText
+            android:id="@+id/etNome"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/adapter_contato_item_tvItem"
+            android:ems="10"
+            android:inputType="text" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/etSobrenome"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/adapter_contato_item_tvItem"
+            android:layout_toLeftOf="@+id/ivContato"
+            android:layout_toRightOf="@+id/etNome"
+            android:ems="10"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/tvSobrenome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/adapter_contato_item_tvItem"
+            android:layout_alignBottom="@+id/adapter_contato_item_tvItem"
+            android:layout_alignLeft="@+id/etSobrenome"
+            android:text="@string/sobrenome" />
+        
+        <TextView
+            android:id="@+id/tvCargo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/etNome"
+            android:layout_below="@+id/etNome"
+            android:text="@string/cargo" />
+
+        <EditText
+            android:id="@+id/etCargo"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tvCargo"
+            android:layout_below="@+id/tvCargo"
+            android:ems="10" 
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/tvDepto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/etDepto"
+            android:layout_alignLeft="@+id/etDepto"
+            android:text="@string/depto" />
+
+        <EditText
+            android:id="@+id/etDepto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/etCargo"
+            android:layout_alignBottom="@+id/etCargo"
+            android:layout_toRightOf="@+id/etCargo"
+            android:ems="10"
+            android:inputType="text" />
+                
+        <TextView
+            android:id="@+id/tvFone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/etCargo"
+            android:layout_below="@+id/etCargo"
+            android:text="@string/telefone" />
+
+        <EditText
+            android:id="@+id/etTelefone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tvFone"
+            android:layout_below="@+id/tvFone"
+            android:ems="10"
+            android:inputType="phone" />
+        
+        <TextView
+            android:id="@+id/tvEndereco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/etTelefone"
+            android:layout_below="@+id/etTelefone"
+            android:text="@string/endereco" />
+        
+        <EditText
+            android:id="@+id/etEndereco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tvEndereco"
+            android:ems="10"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/tvCidade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/etEndereco"
+            android:text="@string/cidade" />
+
+        <EditText
+            android:id="@+id/etCidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@+id/tvDepto"
+            android:layout_below="@+id/tvCidade"
+            android:ems="10"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/etEstado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCidade"
+            android:layout_toRightOf="@+id/tvDepto"
+            android:ems="10"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/tvEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/etEstado"
+            android:layout_alignLeft="@+id/etEstado"
+            android:text="@string/estado" />
+
+        <Button
+            android:id="@+id/btSalvar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/etCidade"
+            android:layout_below="@+id/etCidade"
+            android:text="@string/salvar" />
+
+        <ImageView
+            android:id="@+id/ivContato"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/etDepto"
+            android:layout_below="@+id/tvSobrenome"
+            android:src="@drawable/ic_launcher" />
+
+    </RelativeLayout>
+
+</ScrollView>

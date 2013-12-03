@@ -113,7 +113,7 @@ public class EquipamentoDao {
 		return result;
 	}
 
-	public List<Equipamento> listar(String where) {
+	public List<Equipamento> listar(String where) throws Exception {
 		List<Equipamento> equipamentos = new ArrayList<Equipamento>();
 
 		String fields[] = {"name", "status", "endereco"};
@@ -136,12 +136,23 @@ public class EquipamentoDao {
 		// Chamando o método web
 		String result = sc.call("get_entry_list", parameters);
 
-		// Tratando o retorno para devolver a lista
-		String [] split = result.split("---");
-		for (int i = 0; i < split.length; i++) {
-			Equipamento equipamento = new Equipamento(split[i]);
-			equipamentos.add(equipamento);			
+		// Tratando o retorno para devolver apenas a lista
+		if (result.equals("Sugar Indisponivel.")) {
+			throw new Exception("Sugar Indisponivel.");
+		} else if (result.equals("")) {
+			throw new Exception("Não Há Registros.");			
+		} else {
+			if (result.length() < 10) {
+				throw new Exception(result);			
+			} else {
+				String [] split = result.split("---");
+				for (int i = 0; i < split.length; i++) {
+					Equipamento equipamento = new Equipamento(split[i]);
+					equipamentos.add(equipamento);			
+				}				
+			}
 		}
+
 
 		return equipamentos;
 	}

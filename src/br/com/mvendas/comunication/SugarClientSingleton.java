@@ -119,7 +119,6 @@ public class SugarClientSingleton {
         	while (result == null) {
         		Thread.sleep(1000);
         	}
-            //result = httpPost(method, restData);
 		} catch (Exception e) {
 			Log.e("info", "call - Erro ao chamar url. " + e.getMessage());			
 		}
@@ -227,9 +226,6 @@ public class SugarClientSingleton {
             }
         }
  
-        //@Override
-        //protected void onPostExecute(String result) {
-        	//Log.i("info", result);
-        //}
     }
+
 }

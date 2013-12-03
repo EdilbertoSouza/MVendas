@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 import br.com.example.mvendas.R;
 import br.com.mvendas.adapter.EquipamentosListAdapter;
 import br.com.mvendas.dao.EquipamentoDao;
@@ -22,15 +23,12 @@ import com.google.inject.Inject;
 public class EquipamentosActivity extends RoboActivity implements OnItemClickListener {
 	
 	private EquipamentosListAdapter adapter;
-		
+	
 	@Inject
 	private EquipamentoDao equipamentoDao;
 
 	@InjectView(R.id.lvEquipamentos)
 	private ListView lvEquipamentos;
-
-	//@InjectResource(R.array.menu_opcoes)
-	//private String [] menu_opcoes;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +44,17 @@ public class EquipamentosActivity extends RoboActivity implements OnItemClickLis
 	
 	@Override
 	protected void onResume() {
-		super.onResume();
+		super.onResume();		
 		// Obtem a lista dos equipamentos do SugarCRM
 		List<Equipamento> equipamentos = listarEquipamentos();
-		// Adiciona os equipamentos na tela
-		adapter.newList(equipamentos);
-		lvEquipamentos.setAdapter(adapter);
+		if (equipamentos == null) {
+			Toast.makeText(EquipamentosActivity.this, "Não foi possivel recuperar produtos", Toast.LENGTH_LONG).show();
+			super.onBackPressed();
+		} else {
+			// Adiciona os equipamentos na tela
+			adapter.newList(equipamentos);
+			lvEquipamentos.setAdapter(adapter);			
+		}
 	}
 
 	private List<Equipamento> listarEquipamentos() {
@@ -61,10 +64,9 @@ public class EquipamentosActivity extends RoboActivity implements OnItemClickLis
 			EquipamentoDao equipamentoDao = new EquipamentoDao();
 			equipamentos = equipamentoDao.listar("name like 'FS%'");
 		} catch (Exception e) {
-			Log.e("Info", "Erro ao Listar Equipamentos");
-			Log.e("Info", e.toString());
+			Log.e("Info", "Erro ao Listar Equipamentos. Motivo: " + e.getMessage());
 		}
-    	return equipamentos;
+		return equipamentos;
 	}
 
 	@Override
@@ -74,51 +76,7 @@ public class EquipamentosActivity extends RoboActivity implements OnItemClickLis
 	}
 
 	private void editar(Equipamento equipamento) {
-		if(equipamento != null){
-//			String idStr = String.valueOf(aluno.getId());			
-			//Intent it = new Intent(this, FormActivity.class);
-			//it.putExtra(FormActivity.INTENT_EXTRA_DATA_ALUNO, equipamento);			
-			//startActivity(it);
-		}
+		Toast.makeText(EquipamentosActivity.this, "Rotina a Implementar...", Toast.LENGTH_LONG).show();
 	}
 
-	/*
-	@SuppressWarnings("unused")
-	private void testarClientSugar() {
-		String sitio = "";
-		String equipamento_id = "";
-		String status = "";
-		String novo_status = "";
-		// Criando um objeto do tipo SugarClient
-		SugarClientSingleton sc = SugarClientSingleton.getInstance();
-		try {
-			// Criando um objeto do tipo Equipamento
-			EquipamentoDao equipamentoDao = new EquipamentoDao();
-			// Recuperando o id e status atual
-			sitio = "FS001";
-			equipamento_id = equipamentoDao.recuperarId(sitio);
-			// Verificando o status para poder alternar entre ativo e inativo
-			status = equipamentoDao.recuperarStatus(equipamento_id);
-			if (status.equals("ativo")) {
-			      novo_status = "Inativo";
-			} else {
-			      novo_status = "ativo";
-			}
-			// Atualizando o status do equipamento
-			equipamentoDao.atualizarStatus(equipamento_id, novo_status);
-			// Exibindo id, sitio, status anterior e atual
-			Log.i("Info", "ID: " + equipamento_id);
-			Log.i("Info", "Sitio: " + sitio);
-			Log.i("Info", "Status Anterior: " + status);
-			Log.i("Info", "Status Atual...: " + novo_status);
-			//Log.i("Info", "Endereco: " + registro.endereco.value);
-			// Listando equipamentos
-			//List<Equipamento> equipamentos = equipamentoDao.listar("name like 'FS00%'");
-		} catch (Exception e) {
-			Log.e("Info", "testarClienteSugar com erro");
-			e.getMessage();
-			e.printStackTrace();
-		}
-	}
-	*/
 }

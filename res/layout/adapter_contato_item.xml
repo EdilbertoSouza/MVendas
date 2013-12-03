@@ -6,6 +6,12 @@
     android:gravity="center_vertical"
     android:orientation="horizontal" >
 
+    <ImageView
+        android:id="@+id/adapter_contato_item_ivItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+
     <TextView
         android:id="@+id/adapter_contato_item_tvItem"
         android:layout_width="wrap_content"

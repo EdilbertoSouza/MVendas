@@ -37,7 +37,6 @@ import com.google.inject.Inject;
 public class ClientesActivity extends RoboActivity implements OnItemClickListener {
 	
 	private ClientesListAdapter adapter;
-	private List<Cliente> clientes = null;
 		
 	@Inject
 	private ClienteDao clienteDao;
@@ -63,7 +62,7 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 	protected void onResume() {
 		super.onResume();
 		// Obtem a lista dos clientes do SugarCRM
-		listarClientes();
+		List<Cliente> clientes = listarClientes();
 		if (clientes == null) {
 			Toast.makeText(ClientesActivity.this, "Não foi possivel recuperar clientes", Toast.LENGTH_LONG).show();
 			super.onBackPressed();
@@ -153,13 +152,15 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		editar(selecionado);
 	}
 	
-	private void listarClientes() {
+	private List<Cliente> listarClientes() {
+		List<Cliente> clientes = null;
 		try {
 			ClienteDao clienteDao = new ClienteDao();
 			clientes = clienteDao.listar("Accounts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
 		} catch (Exception e) {
 			Log.e("Info", "Erro ao Listar Clientes. Motivo: " + e.getMessage());
 		}
+		return clientes;
 	}
 
 	private void fazerLigacao(final Cliente selecionado) {
