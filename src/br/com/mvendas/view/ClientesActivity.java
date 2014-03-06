@@ -8,6 +8,7 @@ import roboguice.inject.InjectResource;
 import roboguice.inject.InjectView;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,22 +32,20 @@ import br.com.mvendas.dao.ClienteDao;
 import br.com.mvendas.model.Cliente;
 import br.com.mvendas.utils.Sms;
 
-import com.google.inject.Inject;
-
 @ContentView(R.layout.activity_clientes_listar)
 public class ClientesActivity extends RoboActivity implements OnItemClickListener {
 	
 	private ClientesListAdapter adapter;
 		
-	@Inject
-	private ClienteDao clienteDao;
+	//@Inject
+	//private void ClienteDao(Context context) clienteDao;
 
 	@InjectView(R.id.lvClientes)
 	private ListView lvClientes;
 
 	@InjectResource(R.array.cliente_menu_opcoes)
 	private String [] menu_opcoes;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,8 +60,8 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// Obtem a lista dos clientes do SugarCRM
-		List<Cliente> clientes = listarClientes();
+		// Obtem a lista dos clientes
+		List<Cliente> clientes = listar();
 		if (clientes == null) {
 			Toast.makeText(ClientesActivity.this, "Não foi possivel recuperar clientes", Toast.LENGTH_LONG).show();
 			super.onBackPressed();
@@ -139,6 +138,9 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 
 			} else if(menuItemName.equalsIgnoreCase("Editar")){
 				editar(selecionado);
+
+			} else if(menuItemName.equalsIgnoreCase("Remover")){
+				remover(selecionado);
 							
 			}
 		}
@@ -152,11 +154,12 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		editar(selecionado);
 	}
 	
-	private List<Cliente> listarClientes() {
+	private List<Cliente> listar() {
 		List<Cliente> clientes = null;
 		try {
-			ClienteDao clienteDao = new ClienteDao();
-			clientes = clienteDao.listar("Accounts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
+			ClienteDao clienteDao = new ClienteDao(this);
+			clientes = clienteDao.listarBD(); //"Accounts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
+			//clienteDao.fechar();
 		} catch (Exception e) {
 			Log.e("Info", "Erro ao Listar Clientes. Motivo: " + e.getMessage());
 		}
@@ -236,32 +239,32 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		}
 	}
 
-	/*
 	private void remover(final Cliente cliente) {
-		if(cliente != null){
-			
-			AlertDialog.Builder alert = new AlertDialog.Builder(this);
-			alert.setTitle("Confirmação");
-			alert.setMessage("Deseja remover o(a) cliente(a) " + cliente.getName() + "?");
-			
-			alert.setPositiveButton("Sim", new OnClickListener() {				
+		if(cliente != null){			
+			final long idLocal = cliente.getIdLocal();
+			Log.i("info", "[remover] cliente, id_local: " + String.valueOf(idLocal));
+						
+			AlertDialog dialog = new AlertDialog.Builder(this).create();
+			dialog.setTitle("Confirmação");
+			dialog.setMessage("Deseja remover o(a) cliente(a) " + cliente.getName() + "?");
+
+			dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					//clienteDao.deletar(cliente);					
+					ClienteDao clienteDao = new ClienteDao(getApplicationContext());
+					clienteDao.deletarBD(idLocal);									
 					onResume();
 				}
-			});
-			
-			alert.setNegativeButton("Não", new OnClickListener() {				
+			}) ;
+			dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.cancel();
 				}
-			});
+			}) ;
 			
-			alert.show();
-		}
+			dialog.show();			
+		}		
 	}
-	*/
 	
 }

@@ -15,8 +15,6 @@ import br.com.example.mvendas.R;
 import br.com.mvendas.dao.ClienteDao;
 import br.com.mvendas.model.Cliente;
 
-import com.google.inject.Inject;
-
 @ContentView(R.layout.activity_clientes_form)
 public class ClientesFormActivity extends RoboActivity implements OnClickListener {
 
@@ -27,9 +25,12 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	private static final int INTENT_RESULT_DATA_CAMERA = 101;	
 	
 
-	@Inject
-	private ClienteDao clienteDao;
-	
+	//@Inject
+	//private ClienteDao clienteDao;
+
+	@InjectView(R.id.tvIdLocal)
+	private TextView tvIdLocal;
+
 	@InjectView(R.id.tvId)
 	private TextView tvId;
 	
@@ -78,33 +79,15 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	public void onClick(View v) {
 		if(v == btSalvar){
 			Cliente cliente = getCliente();
-			clienteDao.salvar(cliente);
-			
-			Toast.makeText(this,
-					cliente.getName() + " salvo com sucesso!!!", 
-					Toast.LENGTH_SHORT)
-					.show();			
-			finish();
-			
-		//} else if(v == ivContato){
-			//Intent it = new Intent("android.media.action.IMAGE_CAPTURE");
-			//startActivityForResult(it, INTENT_RESULT_DATA_CAMERA);
+			ClienteDao clienteDao = new ClienteDao(getApplicationContext());
+			if (clienteDao.salvarBD(cliente) > 0) {
+				Toast.makeText(this, cliente.getName() + " salvo com sucesso!!!", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(this, "Não foi possível salvar o cliente "  + cliente.getName(), Toast.LENGTH_SHORT).show();				
+			}			
+			finish();			
 		}
 	}
-
-	/*
-	@Override
-	public boolean onLongClick(View v) {
-		if(v == ivContato){
-			Bitmap photo = ((BitmapDrawable) ivContato.getDrawable()).getBitmap();
-			Bitmap newPhoto = ImageManipulation.rotate(photo, -90);
-			
-			ivContato.setImageBitmap(newPhoto);
-		}
-		
-		return true;
-	}
-	*/
 	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {    	
@@ -139,15 +122,16 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	 * @return cliente
 	 */
 	private Cliente getCliente() {
+		long idLocal = 0;
 		String id = "";
 		
 		try {
 			id = tvId.getText().toString();
+			idLocal = Integer.parseInt(tvIdLocal.getText().toString());
 		} catch (NumberFormatException e) {
 			//id = Cliente.getId();
 		}
 		
-		//Bitmap foto = ((BitmapDrawable) ivContato.getDrawable()).getBitmap();
 		String nome = etNome.getText().toString();
 		String telefone = etTelefone.getText().toString();
 		String endereco = etEndereco.getText().toString();
@@ -155,7 +139,7 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 		String estado = etEstado.getText().toString();
 		String website = etSite.getText().toString();
 		
-		Cliente cliente = new Cliente(id, nome, telefone, endereco, cidade, estado, website);
+		Cliente cliente = new Cliente(idLocal, id, nome, telefone, endereco, cidade, estado, website);
 		return cliente;
 	}
 	
@@ -166,8 +150,8 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	 */
 	private void setCliente(Cliente cliente) {
 		if(cliente != null){
-			tvId.setText(String.valueOf(cliente.getId()));
-			//ivContato.setImageBitmap(aluno.getFoto());
+			tvIdLocal.setText(String.valueOf(cliente.getIdLocal()));
+			tvId.setText(cliente.getId());
 			etNome.setText(cliente.getName());
 			etTelefone.setText(cliente.getPhone());
 			etEndereco.setText(cliente.getStreet());
@@ -183,37 +167,34 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	 * @param cliente
 	 * @return i
 	 */
-	/*
 	private int getPosition(String cliente) {
-		for (int i = 0; i < cliente.length; i++) {
-			String item = cliente[i];
+		for (int i = 0; i < cliente.length(); i++) {
+			String item = cliente.valueOf(i);
 			if(cliente.equalsIgnoreCase(item)){
 				return i;
 			}
 		}
 		return 0;
 	}
-	*/
+	
 	
 	/**
 	 * Ler os dados do cliente com o id passado e preenche na tela
 	 * 
 	 * @param id_cliente
 	 */
-	/*
-	@SuppressWarnings("unused")
 	private void carregaDadosPeloId(long id) {
-		Cliente cliente = clienteDao.buscar(id);
+		ClienteDao clienteDao = new ClienteDao(getApplicationContext());
+		Cliente cliente = clienteDao.buscarBD(id);
 		
 		if(cliente != null){
 			setCliente(cliente);
 		} else{
-			Toast.makeText(this, "O cliente de ID="+id+" não foi encontrado!",
+			Toast.makeText(this, "O cliente de ID = " + id + " não foi encontrado!",
 					Toast.LENGTH_LONG).show();
 			finish();
 		}
 	}
-	*/
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {

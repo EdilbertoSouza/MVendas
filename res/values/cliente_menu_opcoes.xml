@@ -6,5 +6,6 @@
         <item name="mapa">Buscar no Mapa</item>
         <item name="site">Exibir Site</item>
         <item name="editar">Editar</item>
-    </string-array>    
+        <item name="remover">Remover</item>
+        </string-array>    
 </resources>

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class Cliente implements Parcelable {
 
+	private long idlocal;
 	private String id;
 	private String name;
 	private String street;
@@ -14,8 +15,9 @@ public class Cliente implements Parcelable {
 	private String email;
 	private String website;
 	
-	public Cliente(String id, String nome, String telefone, String endereco,
+	public Cliente(long idlocal, String id, String nome, String telefone, String endereco,
 			String cidade, String estado, String website) {
+		setIdLocal(idlocal);
 		setId(id);
 		setName(nome);
 		setPhone(telefone);
@@ -57,6 +59,13 @@ public class Cliente implements Parcelable {
 		}
 	}
 
+	public Cliente() {
+	}
+
+	public Long getIdLocal() {
+		return idlocal;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -64,6 +73,10 @@ public class Cliente implements Parcelable {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	public void setIdLocal(long idlocal) {
+		this.idlocal = idlocal;
+	}	
 
 	public String getName() {
 		return name;
@@ -129,8 +142,8 @@ public class Cliente implements Parcelable {
 	}
 	
 	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeLong(idlocal);
 		dest.writeString(id);
-		//dest.writeParcelable(foto, flags);
 		dest.writeString(name);
 		dest.writeString(phone);
 		dest.writeString(street);
@@ -140,8 +153,8 @@ public class Cliente implements Parcelable {
 	}
 	
 	private void readFromParcel(Parcel in) {
+		idlocal = in.readLong();
 		id = in.readString();
-		//foto = in.readParcelable(Bitmap.class.getClassLoader());
 		name = in.readString();
 		phone = in.readString();
 		street = in.readString();

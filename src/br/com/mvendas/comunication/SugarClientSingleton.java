@@ -29,7 +29,7 @@ import br.com.mvendas.utils.StringUtil;
 public class SugarClientSingleton {
 	
 	//public static final String host = "http://10.0.2.2/";
-	private static final String host = "http://192.168.2.100/";
+	private static final String host = "http://192.168.2.101/";
 	private static final String urlLogin = host + "sugarclient/rest/login.php";
 	private static final String urlCall  = host + "sugarclient/rest/call.php";
 	
@@ -54,12 +54,15 @@ public class SugarClientSingleton {
 	 * Método para fazer login no Sugar
 	 * @param userName
 	 * @param password
-	 * @throws Exception
 	 */
-	public void login(String userName, String password) throws Exception {
+	public void login(String userName, String password) {
 		try {
 			session = httpPost(urlLogin);
-			Log.i("info", "Login Efetuado - Sessao = " + session);			
+			if (session.equals("") || session == null) {
+				Log.i("info", "Login Não Efetuado");
+			} else {
+				Log.i("info", "Login Efetuado - Sessao = " + session);
+			}
 		} catch (Exception e) {
 			Log.e("info", "httpPost - Erro ao chamar url. " + urlLogin + ". Motivo: " + e.toString());
 		}
@@ -113,11 +116,13 @@ public class SugarClientSingleton {
      */
     public String call(String method, String parameters[][]) {
     	String restData = StringUtil.toRestData(parameters);
+    	int time = 0;
         try {
         	result = null;
         	new httpPostTask().execute(method, restData);
-        	while (result == null) {
+        	while (result == null && time <= 7000) {
         		Thread.sleep(1000);
+        		time += 1000;
         	}
 		} catch (Exception e) {
 			Log.e("info", "call - Erro ao chamar url. " + e.getMessage());			
@@ -134,7 +139,7 @@ public class SugarClientSingleton {
 			URL url = new URL(urlStr);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-			conn.setReadTimeout(5000);
+			conn.setReadTimeout(3000);
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
 			conn.setDoInput(true);
@@ -181,8 +186,8 @@ public class SugarClientSingleton {
 			
 			// definindo os parametros do post 
 			HttpParams httpParams = new BasicHttpParams();  
-		    HttpConnectionParams.setConnectionTimeout(httpParams, 5000);  
-		    HttpConnectionParams.setSoTimeout(httpParams, 7000);		    
+		    HttpConnectionParams.setConnectionTimeout(httpParams, 3000);  
+		    HttpConnectionParams.setSoTimeout(httpParams, 4000);		    
 			httppost.setParams(httpParams);		    
 
 		    // chamando o SugarClient (PHP)

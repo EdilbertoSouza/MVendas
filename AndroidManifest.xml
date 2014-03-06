@@ -21,7 +21,7 @@
 
     <!-- Permissao para escrever no cartao de memoria -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    
     <!-- Permissoes para enviar SMS -->
     <uses-permission android:name="android.permission.SEND_SMS" />
         

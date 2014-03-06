@@ -11,12 +11,14 @@ import android.widget.Button;
 import android.widget.Toast;
 import br.com.example.mvendas.R;
 import br.com.mvendas.comunication.SugarClientSingleton;
+import br.com.mvendas.dao.DaoFactory;
+import br.com.mvendas.utils.Constantes;
 
-
-public class MainActivity extends Activity implements Runnable {
+public class MainActivity extends Activity {
 	
 	SugarClientSingleton sc;
 	ProgressDialog dialog;
+	DaoFactory dao;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +37,67 @@ public class MainActivity extends Activity implements Runnable {
 		Button btOrcamentos = (Button) findViewById(R.id.btOrcamentos);
 		btOrcamentos.setOnClickListener(btOrcamentosOnClickListener);
 		
-		dialog = ProgressDialog.show(MainActivity.this, "", "Conectando ao SugarCRM...", true);
-		new Thread(this).start();
+		ConectarSugar();
 	}
-		
+	
+	@Override
+	protected void onDestroy() {
+        sc.logout();
+        sc = null;
+        dao.fechar();
+		super.onDestroy();
+	}
+	
+	/*
 	@Override
 	public void run() {
 		try {
 			sc = SugarClientSingleton.getInstance();
-			sc.login("mvendas", "srlke58x");				
+			sc.login("mvendas", "srlke58x");
+	        // Cria os diretórios
+			if(!Constantes.DIR_MVENDAS.exists()){
+				Constantes.DIR_MVENDAS.mkdir();
+			}
+			if(!Constantes.DIR_BASE.exists()){
+				Constantes.DIR_BASE.mkdir();
+			}
+	        // Cria o repositorio e as instancias de controle
+	        //new DaoFactory(getApplicationContext());
 		} catch (Exception e) {
 			Log.e("info", "run - login " + e.getMessage());
 		}
 		dialog.dismiss();
 	}
-
-	@Override
-	protected void onDestroy() {
-        sc.logout();
-        sc = null;
-		super.onDestroy();
+	*/
+	
+	private void ConectarSugar() {
+		dialog = ProgressDialog.show(MainActivity.this, "", "Conectando ao SugarCRM ...", true);
+		try{
+			new Thread(new Runnable() {				
+				@Override
+				public void run() {
+					try {
+				        // Cria os diretórios
+						if(!Constantes.DIR_MVENDAS.exists()){
+							Constantes.DIR_MVENDAS.mkdir();
+						}
+						if(!Constantes.DIR_BASE.exists()){
+							Constantes.DIR_BASE.mkdir();
+						}
+				        // Cria o repositorio e as instancias de controle
+				        dao = new DaoFactory(getApplicationContext());
+						sc = SugarClientSingleton.getInstance();
+						sc.login("mvendas", "srlke58x");
+					} catch (Exception e) {
+						Log.e("info", "run - login " + e.getMessage());
+					} finally{
+						dialog.dismiss();
+					}
+				}
+			}).start();
+		} catch(Throwable e){
+			Log.e("info", e.getMessage(), e);
+		}	
 	}
 
 	private OnClickListener btClientesOnClickListener = new OnClickListener() {
