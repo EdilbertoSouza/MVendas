@@ -8,9 +8,11 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
-    <!-- Permissao para acessar a internet -->
+    <!-- Permissao para acessar a rede/internet -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-
+    
     <!-- Permissao para vibrar -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -19,10 +21,10 @@
 
     <!-- Permissao para escrever no cartao de memoria -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    
     <!-- Permissoes para enviar SMS -->
     <uses-permission android:name="android.permission.SEND_SMS" />
-    
+        
     <application
         android:allowBackup="true"
         android:icon="@drawable/mvendas"
@@ -42,9 +44,25 @@
             android:label="@string/clientes" >
         </activity>
         <activity
+            android:name="br.com.mvendas.view.ClientesBuscarActivity"
+            android:label="@string/clientes" >
+        </activity>
+        <activity
+            android:name="br.com.mvendas.view.ClientesFormActivity"
+            android:label="@string/cliente" >
+        </activity>
+        <activity
+            android:name="br.com.mvendas.view.ContatosActivity"
+            android:label="@string/contatos" >
+        </activity>
+        <activity
+            android:name="br.com.mvendas.view.ContatosFormActivity"
+            android:label="@string/contato" >
+        </activity>
+        <activity
             android:name="br.com.mvendas.view.EquipamentosActivity"
             android:label="@string/equipamentos" >
         </activity>        
-    </application>
+        </application>
     
 </manifest>

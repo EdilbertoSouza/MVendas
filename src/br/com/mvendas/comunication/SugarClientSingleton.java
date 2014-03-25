@@ -29,7 +29,7 @@ import br.com.mvendas.utils.StringUtil;
 public class SugarClientSingleton {
 	
 	//public static final String host = "http://10.0.2.2/";
-	private static final String host = "http://192.168.2.101/";
+	private static final String host = "http://192.168.2.100/";
 	private static final String urlLogin = host + "sugarclient/rest/login.php";
 	private static final String urlCall  = host + "sugarclient/rest/call.php";
 	
@@ -134,6 +134,7 @@ public class SugarClientSingleton {
 	public static String httpPost(String urlStr) throws Exception {
 		
 		String result = "";
+		int responseCode;
 
 		try {
 			URL url = new URL(urlStr);
@@ -148,8 +149,9 @@ public class SugarClientSingleton {
 			conn.setRequestProperty("Content-Type",	"application/x-www-form-urlencoded");
 			conn.setRequestProperty("charset", "utf-8");
 			//conn.setRequestProperty("Content-Length", "" + Integer.toString(urlStr.getBytes().length));  		
-
-			if (conn.getResponseCode() != 200) {
+			
+			responseCode = conn.getResponseCode();
+			if (responseCode != 200) {
 				throw new IOException(conn.getResponseMessage());
 			}
 
@@ -163,7 +165,6 @@ public class SugarClientSingleton {
 			rd.close();
 			result = sb.toString();
 			conn.disconnect();			
-			//Log.i("info", "httpPost - Result. " + result);
 		} catch (Exception e) {
 			Log.e("info", "httpPost - Erro ao chamar url. " + e.getMessage());			
 		}
@@ -186,8 +187,8 @@ public class SugarClientSingleton {
 			
 			// definindo os parametros do post 
 			HttpParams httpParams = new BasicHttpParams();  
-		    HttpConnectionParams.setConnectionTimeout(httpParams, 3000);  
-		    HttpConnectionParams.setSoTimeout(httpParams, 4000);		    
+		    HttpConnectionParams.setConnectionTimeout(httpParams, 7000);  
+		    HttpConnectionParams.setSoTimeout(httpParams, 10000);		    
 			httppost.setParams(httpParams);		    
 
 		    // chamando o SugarClient (PHP)

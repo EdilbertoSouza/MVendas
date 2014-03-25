@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);				
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		Button btClientes = (Button) findViewById(R.id.btClientes);
@@ -37,41 +37,19 @@ public class MainActivity extends Activity {
 		Button btOrcamentos = (Button) findViewById(R.id.btOrcamentos);
 		btOrcamentos.setOnClickListener(btOrcamentosOnClickListener);
 		
-		ConectarSugar();
+		Conectar();
 	}
 	
 	@Override
 	protected void onDestroy() {
         sc.logout();
         sc = null;
-        dao.fechar();
+        dao.close();
 		super.onDestroy();
 	}
 	
-	/*
-	@Override
-	public void run() {
-		try {
-			sc = SugarClientSingleton.getInstance();
-			sc.login("mvendas", "srlke58x");
-	        // Cria os diretórios
-			if(!Constantes.DIR_MVENDAS.exists()){
-				Constantes.DIR_MVENDAS.mkdir();
-			}
-			if(!Constantes.DIR_BASE.exists()){
-				Constantes.DIR_BASE.mkdir();
-			}
-	        // Cria o repositorio e as instancias de controle
-	        //new DaoFactory(getApplicationContext());
-		} catch (Exception e) {
-			Log.e("info", "run - login " + e.getMessage());
-		}
-		dialog.dismiss();
-	}
-	*/
-	
-	private void ConectarSugar() {
-		dialog = ProgressDialog.show(MainActivity.this, "", "Conectando ao SugarCRM ...", true);
+	private void Conectar() {
+		dialog = ProgressDialog.show(MainActivity.this, "", "Conectando ao SugarCRM...", true);
 		try{
 			new Thread(new Runnable() {				
 				@Override
@@ -99,7 +77,7 @@ public class MainActivity extends Activity {
 			Log.e("info", e.getMessage(), e);
 		}	
 	}
-
+	
 	private OnClickListener btClientesOnClickListener = new OnClickListener() {
 	    @Override
 	    public void onClick(View v) {

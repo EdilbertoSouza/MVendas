@@ -8,20 +8,24 @@
 package br.com.example.mvendas;
 
 public final class R {
+    public static final class array {
+        public static final int cliente_menu_opcoes=0x7f040000;
+        public static final int contatos_menu_opcoes=0x7f040001;
+    }
     public static final class attr {
     }
     public static final class dimen {
-        public static final int activity_clientes_buttons=0x7f040004;
+        public static final int activity_clientes_buttons=0x7f050004;
         /**  Default screen margins, per the Android Design guidelines. 
 
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_main_buttons=0x7f040002;
-        public static final int activity_text=0x7f040003;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f050000;
+        public static final int activity_main_buttons=0x7f050002;
+        public static final int activity_text=0x7f050003;
+        public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
         public static final int clientes=0x7f020000;
@@ -31,49 +35,103 @@ public final class R {
         public static final int orcamentos=0x7f020004;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000b;
-        public static final int adapter_cliente_item_tvItem=0x7f080009;
-        public static final int adapter_equipamento_item_tvItem=0x7f08000a;
-        public static final int btBuscarPorCodigo=0x7f080002;
-        public static final int btClientes=0x7f080006;
-        public static final int btEquipamentos=0x7f080007;
-        public static final int btOrcamentos=0x7f080008;
-        public static final int button2=0x7f080003;
-        public static final int editText1=0x7f080001;
-        public static final int lvClientes=0x7f080004;
-        public static final int lvEquipamentos=0x7f080005;
-        public static final int textView1=0x7f080000;
+        public static final int LinearLayout1=0x7f090005;
+        public static final int RelativeLayout1=0x7f090016;
+        public static final int action_settings=0x7f09002b;
+        public static final int adapter_cliente_item_tvItem=0x7f090008;
+        public static final int adapter_contato_item_ivItem=0x7f090024;
+        public static final int adapter_contato_item_tvItem=0x7f090017;
+        public static final int adapter_equipamento_item_tvItem=0x7f090025;
+        public static final int btBuscarCliente=0x7f090004;
+        public static final int btClientes=0x7f090020;
+        public static final int btContatos=0x7f090021;
+        public static final int btDialogEnviar=0x7f090027;
+        public static final int btEquipamentos=0x7f090023;
+        public static final int btOrcamentos=0x7f090022;
+        public static final int btSalvar=0x7f090014;
+        public static final int clientes_buscar_imgBtVoz=0x7f090003;
+        public static final int clientes_buscar_spIdioma=0x7f090002;
+        public static final int etBuscarCliente=0x7f090001;
+        public static final int etCargo=0x7f09001b;
+        public static final int etCidade=0x7f09000f;
+        public static final int etDepto=0x7f09001d;
+        public static final int etDialogEnviar=0x7f090026;
+        public static final int etEndereco=0x7f09000d;
+        public static final int etEstado=0x7f090011;
+        public static final int etNome=0x7f090009;
+        public static final int etSite=0x7f090013;
+        public static final int etSobrenome=0x7f090018;
+        public static final int etTelefone=0x7f09000b;
+        public static final int ivContato=0x7f090019;
+        public static final int lvClientes=0x7f090015;
+        public static final int lvContatos=0x7f09001e;
+        public static final int lvEquipamentos=0x7f09001f;
+        public static final int lvVoz=0x7f090028;
+        public static final int menu_buscar=0x7f09002a;
+        public static final int menu_novo=0x7f090029;
+        public static final int textView7=0x7f090012;
+        public static final int tvCargo=0x7f090000;
+        public static final int tvCidade=0x7f09000e;
+        public static final int tvDepto=0x7f09001c;
+        public static final int tvEndereco=0x7f09000c;
+        public static final int tvEstado=0x7f090010;
+        public static final int tvFone=0x7f09000a;
+        public static final int tvId=0x7f090007;
+        public static final int tvIdLocal=0x7f090006;
+        public static final int tvSobrenome=0x7f09001a;
     }
     public static final class layout {
         public static final int activity_clientes_buscar=0x7f030000;
-        public static final int activity_clientes_listar=0x7f030001;
-        public static final int activity_equipamentos_listar=0x7f030002;
-        public static final int activity_main=0x7f030003;
-        public static final int adapter_cliente_item=0x7f030004;
-        public static final int adapter_equipamento_item=0x7f030005;
+        public static final int activity_clientes_form=0x7f030001;
+        public static final int activity_clientes_listar=0x7f030002;
+        public static final int activity_contatos_form=0x7f030003;
+        public static final int activity_contatos_listar=0x7f030004;
+        public static final int activity_equipamentos_listar=0x7f030005;
+        public static final int activity_main=0x7f030006;
+        public static final int adapter_cliente_item=0x7f030007;
+        public static final int adapter_contato_item=0x7f030008;
+        public static final int adapter_equipamento_item=0x7f030009;
+        public static final int dialog_sms=0x7f03000a;
+        public static final int dialog_voz=0x7f03000b;
     }
     public static final class menu {
-        public static final int main=0x7f070000;
+        public static final int clientes=0x7f080000;
+        public static final int contatos=0x7f080001;
+        public static final int main=0x7f080002;
     }
     public static final class string {
-        public static final int action_settings=0x7f050001;
-        public static final int app_name=0x7f050000;
-        public static final int buscar_cliente=0x7f050007;
-        public static final int buscar_cliente_cnpj=0x7f05000b;
-        public static final int buscar_cliente_codigo=0x7f05000a;
-        public static final int buscar_equipamento=0x7f050011;
-        public static final int cliente=0x7f050009;
-        public static final int cliente_codigo=0x7f05000d;
-        public static final int clientes=0x7f050003;
-        public static final int dado_busca_cliente=0x7f05000c;
-        public static final int equipamento=0x7f05000e;
-        public static final int equipamentos=0x7f05000f;
-        public static final int hello_world=0x7f050002;
-        public static final int listar_clientes=0x7f050006;
-        public static final int listar_equipamentos=0x7f050010;
-        public static final int orcamentos=0x7f050005;
-        public static final int produtos=0x7f050004;
-        public static final int voltar_tela=0x7f050008;
+        public static final int action_settings=0x7f060001;
+        public static final int app_name=0x7f060000;
+        public static final int btEnviar=0x7f06001a;
+        public static final int buscar=0x7f06000a;
+        public static final int buscar_cliente=0x7f060007;
+        public static final int buscar_equipamento=0x7f060012;
+        public static final int cargo=0x7f060017;
+        public static final int cidade=0x7f060015;
+        public static final int cliente=0x7f060009;
+        public static final int cliente_codigo=0x7f06000c;
+        public static final int clientes=0x7f060003;
+        public static final int contato=0x7f060010;
+        public static final int contatos=0x7f06000f;
+        public static final int dado_busca_cliente=0x7f06000b;
+        public static final int depto=0x7f060018;
+        public static final int endereco=0x7f060014;
+        public static final int equipamento=0x7f06000d;
+        public static final int equipamentos=0x7f06000e;
+        public static final int estado=0x7f060016;
+        public static final int hello_world=0x7f060002;
+        public static final int listar_clientes=0x7f060006;
+        public static final int listar_equipamentos=0x7f060011;
+        public static final int menu_buscar=0x7f06001c;
+        public static final int menu_novo=0x7f06001b;
+        public static final int nome=0x7f06001e;
+        public static final int orcamentos=0x7f060005;
+        public static final int produtos=0x7f060004;
+        public static final int salvar=0x7f060019;
+        public static final int site=0x7f06001d;
+        public static final int sobrenome=0x7f06001f;
+        public static final int telefone=0x7f060013;
+        public static final int voltar_tela=0x7f060008;
     }
     public static final class style {
         /** 
@@ -97,10 +155,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f070001;
     }
 }

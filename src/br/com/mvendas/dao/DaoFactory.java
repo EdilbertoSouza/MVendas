@@ -41,7 +41,7 @@ public class DaoFactory {
 		db = dbHelper.getWritableDatabase();
 	}
 	
-	public void fechar() {
+	public void close() {
 		if(db != null){
 			db.close();
 		}		
