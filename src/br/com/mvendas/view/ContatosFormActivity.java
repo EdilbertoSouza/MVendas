@@ -163,7 +163,7 @@ public class ContatosFormActivity extends RoboActivity implements OnClickListene
 		String cidade = etCidade.getText().toString();
 		String estado = etEstado.getText().toString();
 		
-		Contato contato = new Contato(id, foto, nome, sobrenome, cargo, depto, telefone, endereco, cidade, estado);
+		Contato contato = new Contato(id, nome, sobrenome, cargo, depto, endereco, cidade, estado, telefone, foto);
 		return contato;
 	}
 	

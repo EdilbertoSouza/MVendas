@@ -23,7 +23,6 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	public static final String INTENT_EXTRA_DATA_CLIENTE = "_cliente_";
 	
 	private static final int INTENT_RESULT_DATA_CAMERA = 101;	
-	
 
 	//@Inject
 	//private ClienteDao clienteDao;
@@ -80,7 +79,7 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 		if(v == btSalvar){
 			Cliente cliente = getCliente();
 			ClienteDao clienteDao = new ClienteDao(getApplicationContext());
-			if (clienteDao.salvarBD(cliente) > 0) {
+			if (clienteDao.salvar(cliente) > 0) {
 				Toast.makeText(this, cliente.getName() + " salvo com sucesso!!!", Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(this, "Não foi possível salvar o cliente "  + cliente.getName(), Toast.LENGTH_SHORT).show();				
@@ -185,7 +184,7 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	 */
 	private void carregaDadosPeloId(long id) {
 		ClienteDao clienteDao = new ClienteDao(getApplicationContext());
-		Cliente cliente = clienteDao.buscarBD(id);
+		Cliente cliente = clienteDao.buscarLocal(id);
 		
 		if(cliente != null){
 			setCliente(cliente);

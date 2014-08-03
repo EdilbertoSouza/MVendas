@@ -34,5 +34,6 @@
     <string name="site">Site</string>
     <string name="nome">Nome</string>
     <string name="sobrenome">Sobrenome</string>
+    <string name="sincronizar">Sincronizar</string>
     
 </resources>

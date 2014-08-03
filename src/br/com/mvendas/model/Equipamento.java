@@ -12,6 +12,7 @@ public class Equipamento {
 	
 	public Equipamento(String string) {
 		String[] linhas = string.split(";");
+		Log.i("info", "linhas = " + linhas);
 		try {
 			for (int i = 0; i < linhas.length; i++) {
 				String [] split = linhas[i].toString().split("=");

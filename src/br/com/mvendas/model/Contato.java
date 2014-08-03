@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 public class Contato implements Parcelable {
 
+	private long idlocal;
 	private String id;
 	private Bitmap foto;
 	private String name;
@@ -18,53 +19,64 @@ public class Contato implements Parcelable {
 	private String phone;
 	private String email;
 	
-	public Contato(String id, Bitmap foto, String nome, String lastName, String cargo, String depto, 
-			String telefone, String endereco, String cidade, String estado) {
+	public Contato(String id, String nome, String lastName, String cargo, String depto, 
+		String endereco, String cidade, String estado, String telefone, Bitmap foto) {
 		setId(id);
 		setName(nome);
 		setLastName(lastName);
 		setCargo(cargo);
 		setDepto(depto);
-		setPhone(telefone);
 		setStreet(endereco);
 		setCity(cidade);
 		setState(estado);
+		setPhone(telefone);
 	}
 	
 	public Contato(Parcel in) {
 		readFromParcel(in);
 	}
 	
-	public Contato(String contato) {
+	public Contato(String name_values) {
 		
-		String[] linhas = contato.split(";");
+		String[] columns = name_values.split(";");
 		
-		for (int i = 0; i < linhas.length; i++) {
-			String [] split = linhas[i].toString().split("=");
-			String chave = split[0];
-			String valor = split[1];
-			if(chave.equalsIgnoreCase("id")){
-				setId(valor);
-			} if(chave.equalsIgnoreCase("first_name")){
-				setName(valor);
-			} if(chave.equalsIgnoreCase("last_name")){
-				setLastName(valor);
-			} if(chave.equalsIgnoreCase("title")){
-				setCargo(valor);
-			} if(chave.equalsIgnoreCase("department")){
-				setDepto(valor);
-			} if(chave.equalsIgnoreCase("primary_address_street")){
-				setStreet(valor);
-			} if(chave.equalsIgnoreCase("primary_address_city")){
-				setCity(valor);
-			} if(chave.equalsIgnoreCase("primary_address_state")){
-				setState(valor);
-			} if(chave.equalsIgnoreCase("phone_mobile")){
-				setPhone(valor);
+		for (int i = 0; i < columns.length; i++) {
+			String [] name_value = columns[i].toString().split("=");
+			String name  = name_value[0];
+			String value = name_value[1];
+			if(name.equalsIgnoreCase("id")){
+				setId(value);
+			} if(name.equalsIgnoreCase("first_name")){
+				setName(value);
+			} if(name.equalsIgnoreCase("last_name")){
+				setLastName(value);
+			} if(name.equalsIgnoreCase("title")){
+				setCargo(value);
+			} if(name.equalsIgnoreCase("department")){
+				setDepto(value);
+			} if(name.equalsIgnoreCase("primary_address_street")){
+				setStreet(value);
+			} if(name.equalsIgnoreCase("primary_address_city")){
+				setCity(value);
+			} if(name.equalsIgnoreCase("primary_address_state")){
+				setState(value);
+			} if(name.equalsIgnoreCase("phone_mobile")){
+				setPhone(value);
 			}
 		}
 	}
 
+	public Contato() {
+	}
+
+	public void setIdLocal(long idlocal) {
+		this.idlocal = idlocal;
+	}	
+
+	public Long getIdLocal() {
+		return idlocal;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -72,7 +84,7 @@ public class Contato implements Parcelable {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	
 	public Bitmap getFoto() {
 		return foto;
 	}

@@ -31,15 +31,13 @@ import br.com.mvendas.dao.ContatoDao;
 import br.com.mvendas.model.Contato;
 import br.com.mvendas.utils.Sms;
 
-import com.google.inject.Inject;
-
 @ContentView(R.layout.activity_contatos_listar)
 public class ContatosActivity extends RoboActivity implements OnItemClickListener {
 	
 	private ContatosListAdapter adapter;
 		
-	@Inject
-	private ContatoDao contatoDao;
+	//@Inject
+	//private ContatoDao contatoDao;
 
 	@InjectView(R.id.lvContatos)
 	private ListView lvContatos;
@@ -61,8 +59,8 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// Obtem a lista dos contatos do SugarCRM
-		List<Contato> contatos = listarContatos();
+		// Obtem a lista dos contatos
+		List<Contato> contatos = listar();
 		if (contatos == null) {
 			Toast.makeText(ContatosActivity.this, "Não foi possivel recuperar contatos", Toast.LENGTH_LONG).show();
 			super.onBackPressed();
@@ -143,14 +141,14 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 		Contato selecionado = (Contato) adapter.getItem(position);		
 		editar(selecionado);
 	}
-		
-	private List<Contato> listarContatos() {
+	
+	private List<Contato> listar() {
 		List<Contato> contatos = null;
 		try {
-			ContatoDao contatoDao = new ContatoDao();
-			contatos = contatoDao.listar("contacts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
+			ContatoDao contatoDao = new ContatoDao(this);
+			contatos = contatoDao.listar(); //"contacts.assigned_user_id='f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
 		} catch (Exception e) {
-			Log.e("Info", "Erro ao Listar Contatos. Motivo: " + e.getMessage());
+			Log.e("Info", "Erro ao Listar Contatos. Motivo: " + e.toString());
 		}
 		return contatos;
 	}

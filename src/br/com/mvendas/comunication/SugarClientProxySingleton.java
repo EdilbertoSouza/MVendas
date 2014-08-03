@@ -21,29 +21,27 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import android.os.AsyncTask;
 import android.util.Log;
 import br.com.mvendas.utils.StringUtil;
 
-public class SugarClientSingleton {
+public class SugarClientProxySingleton {
 	
 	//public static final String host = "http://10.0.2.2/";
 	public static final String host = "http://192.168.2.100/";
-	public static final String urlLogin = host + "sugardev/service/v2/rest.php";
-	public static final String urlCall  = host + "sugardev/service/v2/rest.php";
+	public static final String urlLogin = host + "sugarclient/rest/login.php";
+	public static final String urlCall  = host + "sugarclient/rest/call.php";
 	
-	private static SugarClientSingleton instance;
+	private static SugarClientProxySingleton instance;
 	private static String session;
 	private static String result;
 	
-	private SugarClientSingleton() {}
+	private SugarClientProxySingleton() {}
 			
-	public static SugarClientSingleton getInstance() {
+	public static SugarClientProxySingleton getInstance() {
 		if (instance == null) {
-			instance = new SugarClientSingleton();
+			instance = new SugarClientProxySingleton();
 		}
 		return instance;
 	}
@@ -52,36 +50,24 @@ public class SugarClientSingleton {
 		return session;
 	}
 
-	public void setSession(String session) {
-		SugarClientSingleton.session = session;
-	}
-
 	/***
 	 * Método para fazer login no Sugar
 	 * @param userName
 	 * @param password
-	 */	
-	public void login(String userName, String password) throws Exception {
-		String password1 = encryptor(password);
-
-		JSONObject json = new JSONObject();
-		json.put("user_name", userName);
-		json.put("password", password1);
-
-		JSONObject json2 = new JSONObject();
-		json2.put("user_auth", json);
-		json2.put("application", "mvendas");
-
-		String restdata = json2.toString();
-		String data = httpPost(urlLogin+"?method=login&input_type=json&response_type=json&rest_data="+restdata);
-		JSONObject jsonData = (JSONObject) new JSONTokener(data).nextValue();	
-		session = jsonData.getString("id");
-		if (session.isEmpty()) {
-			throw new Exception(jsonData.getString("description"));
+	 */
+	public void login(String userName, String password) {
+		try {
+			session = httpPost(urlLogin);
+			if (session.equals("") || session == null) {
+				Log.i("info", "Login Não Efetuado");
+			} else {
+				Log.i("info", "Login Efetuado - Sessao = " + session);
+			}
+		} catch (Exception e) {
+			Log.e("info", "httpPost - Erro ao chamar url. " + urlLogin + ". Motivo: " + e.toString());
 		}
-		Log.i("info", "Login Efetuado - Session = " + session);
 	}
-	
+
 	/***
 	 * Método para Criptografar a senha
 	 * @param password
@@ -116,85 +102,34 @@ public class SugarClientSingleton {
      */
     public void logout() {
 		// Definindo os parametros para chamar o método web
-		String parameters[][] = {{"session", getSession()}};
+		String parameters[][] = {{"session", session}};
 		// Chamando o método web
-		try {
-			xcall("logout", parameters);
-			setSession(null);
-			Log.i("info", "Logout Efetuado");
-		} catch (Exception e) {
-			Log.e("info", "Erro ao Efetuar Logout. Motivo: " + e.toString());
-		}
+		String result = call("logout", parameters);
+		Log.i("info", "Logout Efetuado - Result = " + result);
     }	
 		
     /**
-     * Método para chamada de webmétodos do WebService do Sugar
+     * Método para chamada de webmétodos do WebService do Sugar através do SugarClient
      * @param method
      * @param parameters
      * @return result
-     */	
-    public String call(String method, String parameters[][]) throws Exception {
+     */
+    public String call(String method, String parameters[][]) {
     	String restData = StringUtil.toRestData(parameters);
-        String request = urlCall+"?method="+method+"&input_type=json&response_type=json&rest_data="+restData;
-        Log.i("info", "request = " + request);        
-        try {
-    		result = httpPost(request);
-		} catch (Exception e) {
-			throw new Exception("call - Erro ao chamar url. " + e.getMessage());
-		}
-        if (result != null) {
-    		if (result.contains("description")) {
-    			throw new Exception("Sugar Error = " + result);
-    		}        	
-        }
-        return result;
-    }
-
-    public String xcall(String method, String parameters[][]) throws Exception {
-    	String restData = StringUtil.toRestData(parameters);
-        String request = urlCall+"?method="+method+"&input_type=json&response_type=json&rest_data="+restData;
-        //Log.i("info", "request = " + request);
     	int time = 0;
         try {
         	result = null;
-        	new httpPostTask().execute(request);
+        	new httpPostTask().execute(method, restData);
         	while (result == null && time <= 7000) {
         		Thread.sleep(1000);
         		time += 1000;
         	}
 		} catch (Exception e) {
-			throw new Exception("call - Erro ao chamar url. " + e.getMessage());
+			Log.e("info", "call - Erro ao chamar url. " + e.getMessage());			
 		}
-        if (result != null) {
-    		if (result.contains("description")) {
-    			throw new Exception("Sugar Error = " + result);
-    		}        	
-        }
         return result;
     }
-    
-    public void close() {
-		if (instance != null) {
-			if (instance.getSession() != null) {
-				instance.logout();				
-			}
-			instance = null;
-		}    		
-    }
-
-	private class httpPostTask extends AsyncTask<String, String, String> {
-		 
-		@Override
-	    protected String doInBackground(String... params) {
-	        try {
-	            result = httpPost(params[0]);
-	            return result;
-	        } catch (Exception e) {
-	        	return e.getMessage();            	 
-	        }
-	    }
 	
-	}
 
 	public static String httpPost(String urlStr) throws Exception {
 		
@@ -205,7 +140,7 @@ public class SugarClientSingleton {
 			URL url = new URL(urlStr);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-			conn.setReadTimeout(7000);
+			conn.setReadTimeout(3000);
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
 			conn.setDoInput(true);
@@ -213,7 +148,6 @@ public class SugarClientSingleton {
 			conn.setAllowUserInteraction(false);
 			conn.setRequestProperty("Content-Type",	"application/x-www-form-urlencoded");
 			conn.setRequestProperty("charset", "utf-8");
-			//Log.i("info",conn.getResponseMessage());
 			//conn.setRequestProperty("Content-Length", "" + Integer.toString(urlStr.getBytes().length));  		
 			
 			responseCode = conn.getResponseCode();
@@ -232,8 +166,7 @@ public class SugarClientSingleton {
 			result = sb.toString();
 			conn.disconnect();			
 		} catch (Exception e) {
-			//Log.e("info", "httpPost - Erro ao chamar url. " + e.toString());
-			throw new Exception("httpPost Error " + e.toString());
+			Log.e("info", "httpPost - Erro ao chamar url. " + e.getMessage());			
 		}
 		return result;
 	}
@@ -286,5 +219,19 @@ public class SugarClientSingleton {
 		}
 		return result;
 	}
+	
+	private class httpPostTask extends AsyncTask<String, String, String> {
+		 
+		@Override
+        protected String doInBackground(String... params) {
+            try {
+                result = httpPost(params[0], params[1]);
+                return result;
+            } catch (Exception e) {
+            	return e.getMessage();            	 
+            }
+        }
+ 
+    }
 
 }

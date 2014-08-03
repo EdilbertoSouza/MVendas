@@ -158,7 +158,7 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		List<Cliente> clientes = null;
 		try {
 			ClienteDao clienteDao = new ClienteDao(this);
-			clientes = clienteDao.listarBD(); //"Accounts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
+			clientes = clienteDao.listar(); //"Accounts.assigned_user_id = 'f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
 			//clienteDao.fechar();
 		} catch (Exception e) {
 			Log.e("Info", "Erro ao Listar Clientes. Motivo: " + e.getMessage());
@@ -242,7 +242,7 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 	private void remover(final Cliente cliente) {
 		if(cliente != null){			
 			final long idLocal = cliente.getIdLocal();
-			Log.i("info", "[remover] cliente, id_local: " + String.valueOf(idLocal));
+			//Log.i("info", "[remover] cliente, id_local: " + String.valueOf(idLocal));
 						
 			AlertDialog dialog = new AlertDialog.Builder(this).create();
 			dialog.setTitle("Confirmação");
@@ -252,7 +252,7 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					ClienteDao clienteDao = new ClienteDao(getApplicationContext());
-					clienteDao.deletarBD(idLocal);									
+					clienteDao.deletarLocal(idLocal);									
 					onResume();
 				}
 			}) ;

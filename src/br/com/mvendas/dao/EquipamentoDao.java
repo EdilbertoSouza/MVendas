@@ -7,17 +7,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import br.com.mvendas.comunication.SugarClientSingleton;
+import br.com.mvendas.comunication.SugarClientProxySingleton;
 import br.com.mvendas.model.Equipamento;
 import br.com.mvendas.utils.StringUtil;
 
 public class EquipamentoDao {
 	
-	private SugarClientSingleton sc;
+	private SugarClientProxySingleton sc;
 	private String session;
 
 	public EquipamentoDao() {	
-		sc = SugarClientSingleton.getInstance();
+		sc = SugarClientProxySingleton.getInstance();
 		session = sc.getSession();		
 	}
 

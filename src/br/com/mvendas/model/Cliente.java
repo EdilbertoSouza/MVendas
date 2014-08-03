@@ -65,6 +65,10 @@ public class Cliente implements Parcelable {
 	public Long getIdLocal() {
 		return idlocal;
 	}
+	
+	public void setIdLocal(long idlocal) {
+		this.idlocal = idlocal;
+	}
 
 	public String getId() {
 		return id;
@@ -74,10 +78,6 @@ public class Cliente implements Parcelable {
 		this.id = id;
 	}
 	
-	public void setIdLocal(long idlocal) {
-		this.idlocal = idlocal;
-	}	
-
 	public String getName() {
 		return name;
 	}

@@ -9,7 +9,7 @@ public class DaoFactory {
 	private static SQLiteHelper dbHelper = null;
 	
 	// Dados do banco de dados
-	protected static int VERSAO = 3;
+	protected static int VERSAO = 4;
 	protected static String NOME_BANCO = "mvendas";
 	
 	private static final String[] SCRIPT_DATABASE_DELETE = {
@@ -26,11 +26,23 @@ public class DaoFactory {
 				"billing_address_state TEXT," + 
 				"phone_office TEXT," +  
 				"website TEXT" +
+		");",
+		"CREATE TABLE " + ContatoDao.TABELA + " (" +
+				"id_local INTEGER PRIMARY KEY AUTOINCREMENT," +
+				"id TEXT," +
+				"first_name TEXT NOT NULL," + 
+				"last_name TEXT NOT NULL," +
+				"title TEXT NOT NULL," +
+				"department TEXT NOT NULL," +
+				"primary_address_street TEXT," + 
+				"primary_address_city TEXT," +
+				"primary_address_state TEXT," + 
+				"phone_mobile TEXT" +  
 		");"
 	};
 	
 	/**
-	 * Cria o banco de dados com um script SQL
+	 * Cria o banco de dados SQLite com um script SQL
 	 * @param context
 	 */
 	public DaoFactory(Context context) {
@@ -41,6 +53,19 @@ public class DaoFactory {
 		db = dbHelper.getWritableDatabase();
 	}
 	
+	/**
+	 * Abre conexão com banco de dados SQLite
+	 */
+	public SQLiteDatabase open(Context context) {
+		if(db == null){
+			db = context.openOrCreateDatabase(NOME_BANCO, Context.MODE_PRIVATE, null);
+		}		
+		return db;
+	}
+
+	/**
+	 * Fecha conexão com banco de dados SQLite
+	 */
 	public void close() {
 		if(db != null){
 			db.close();
@@ -48,6 +73,7 @@ public class DaoFactory {
 		if(dbHelper != null){
 			dbHelper.close();
 		}
+		//Log.i("info", "MVendas finalizado");		
 	}
 	
 }

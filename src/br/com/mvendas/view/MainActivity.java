@@ -17,7 +17,8 @@ import br.com.mvendas.utils.Constantes;
 public class MainActivity extends Activity {
 	
 	SugarClientSingleton sc;
-	ProgressDialog dialog;
+	String session;
+	ProgressDialog progress;
 	DaoFactory dao;
 		
 	@Override
@@ -36,20 +37,23 @@ public class MainActivity extends Activity {
 
 		Button btOrcamentos = (Button) findViewById(R.id.btOrcamentos);
 		btOrcamentos.setOnClickListener(btOrcamentosOnClickListener);
-		
+
+		Button btSincronizar = (Button) findViewById(R.id.btSincronizar);
+		btSincronizar.setOnClickListener(btSincronizarOnClickListener);
+
 		Conectar();
 	}
 	
 	@Override
 	protected void onDestroy() {
-        sc.logout();
-        sc = null;
+        sc.close();
         dao.close();
+		Log.i("info", "MVendas finalizado");
 		super.onDestroy();
 	}
 	
 	private void Conectar() {
-		dialog = ProgressDialog.show(MainActivity.this, "", "Conectando ao SugarCRM...", true);
+		progress = ProgressDialog.show(MainActivity.this, "SQLite", "Conectando ao Banco de Dados...", true);
 		try{
 			new Thread(new Runnable() {				
 				@Override
@@ -65,11 +69,12 @@ public class MainActivity extends Activity {
 				        // Cria o repositorio e as instancias de controle
 				        dao = new DaoFactory(getApplicationContext());
 						sc = SugarClientSingleton.getInstance();
-						sc.login("mvendas", "srlke58x");
+						//sc.login("mvendas", "srlke58x");
+						Log.i("info", "MVendas iniciado");						
 					} catch (Exception e) {
-						Log.e("info", "run - login " + e.getMessage());
+						Log.e("info", "login " + e.getMessage());
 					} finally{
-						dialog.dismiss();
+						progress.dismiss();
 					}
 				}
 			}).start();
@@ -126,5 +131,54 @@ public class MainActivity extends Activity {
 		//startActivity(i);		
         Toast.makeText(MainActivity.this, "Rotina a Implementar...", Toast.LENGTH_LONG).show();
 	}
+
+	private OnClickListener btSincronizarOnClickListener = new OnClickListener() {
+	    @Override
+	    public void onClick(View v) {
+	    	sincronizarClick(v);
+	    }
+	};
+
+	public void sincronizarClick(View v) {		
+		progress = ProgressDialog.show(this, "Atenção", "Conectando...", false, true);
+    	
+		try{
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					String resp = "";					
+					try {
+						sc.login("mvendas", "srlke58x");
+						AtualizarMensagem("Desconectando...");
+						sc.logout();
+						AtualizarMensagem("Baixando...");
+						Thread.sleep(3000);
+						//Http http = Http.getInstance(Http.NORMAL);
+						//resp = http.doPost(ConstantesComunicacao.URL_LISTAR, ""); // retorna um lista de alunos no formato Json
+						//List<Aluno> alunos = UtilJson.getJsonArray(resp);
+						resp = "teste";
+					} catch (Exception e) {						
+						Log.e("info", e.getMessage(), e);
+						sc.close();
+					} finally{
+						Log.i("info", ""+resp);
+						sc.close();
+						progress.dismiss();
+					}
+				}
+			}).start();
+		} catch(Throwable e){
+			Log.e("info", e.getMessage(), e);
+		}
+	}
 	
+	public void AtualizarMensagem(final String mensagem) {
+		runOnUiThread ( new Runnable () {
+			@Override
+			public void run () {
+				progress.setMessage(mensagem);
+			}
+		});		
+	}
+
 }
