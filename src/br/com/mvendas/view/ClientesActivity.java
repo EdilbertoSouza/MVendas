@@ -62,7 +62,7 @@ public class ClientesActivity extends RoboActivity implements OnItemClickListene
 		super.onResume();
 		// Obtem a lista dos clientes
 		List<Cliente> clientes = listar();
-		if (clientes == null) {
+		if (clientes.isEmpty()) {
 			Toast.makeText(ClientesActivity.this, "Não foi possivel recuperar clientes", Toast.LENGTH_LONG).show();
 			super.onBackPressed();
 		} else {

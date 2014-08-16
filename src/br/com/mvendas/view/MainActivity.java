@@ -1,5 +1,7 @@
 package br.com.mvendas.view;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,7 +13,11 @@ import android.widget.Button;
 import android.widget.Toast;
 import br.com.example.mvendas.R;
 import br.com.mvendas.comunication.SugarClientSingleton;
+import br.com.mvendas.dao.ClienteDao;
+import br.com.mvendas.dao.ContatoDao;
 import br.com.mvendas.dao.DaoFactory;
+import br.com.mvendas.model.Cliente;
+import br.com.mvendas.model.Contato;
 import br.com.mvendas.utils.Constantes;
 
 public class MainActivity extends Activity {
@@ -149,14 +155,25 @@ public class MainActivity extends Activity {
 					String resp = "";					
 					try {
 						sc.login("mvendas", "srlke58x");
+						
+						AtualizarMensagem("Baixando Clientes...");
+						ClienteDao clienteDao = new ClienteDao(getApplicationContext());
+						List<Cliente> clientes = clienteDao.listarRemoto("Accounts.assigned_user_id='f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
+						for (int i = 0; i < clientes.size(); i++) {
+							Cliente cliente = clientes.get(i);
+							//clienteDao.inserirLocal(cliente);
+						}
+						
+						AtualizarMensagem("Baixando Contatos...");
+						ContatoDao contatoDao = new ContatoDao(getApplicationContext());
+						List<Contato> contatos = contatoDao.listarRemoto("Contacts.assigned_user_id='f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
+						for (int i = 0; i < contatos.size(); i++) {
+							Contato contato = contatos.get(i);							
+							contatoDao.salvarLocal(contato);
+						}					
+
 						AtualizarMensagem("Desconectando...");
 						sc.logout();
-						AtualizarMensagem("Baixando...");
-						Thread.sleep(3000);
-						//Http http = Http.getInstance(Http.NORMAL);
-						//resp = http.doPost(ConstantesComunicacao.URL_LISTAR, ""); // retorna um lista de alunos no formato Json
-						//List<Aluno> alunos = UtilJson.getJsonArray(resp);
-						resp = "teste";
 					} catch (Exception e) {						
 						Log.e("info", e.getMessage(), e);
 						sc.close();

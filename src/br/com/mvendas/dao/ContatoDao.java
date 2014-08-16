@@ -132,7 +132,7 @@ public class ContatoDao {
 				JSONObject register = (JSONObject) entry_list.get(i);
 				JSONObject name_value_list = register.getJSONObject("name_value_list");
 				String name_values = "";
-				for (int j = 0;j < fields.length;j++) {
+				for (int j = 1;j < fields.length;j++) {
 					JSONObject name_value = (JSONObject) name_value_list.get(fields[j]);
 					name_values += name_value.getString("name") + "=" + name_value.getString("value") + ";"; 
 				}

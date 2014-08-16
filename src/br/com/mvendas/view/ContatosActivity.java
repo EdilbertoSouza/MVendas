@@ -61,7 +61,7 @@ public class ContatosActivity extends RoboActivity implements OnItemClickListene
 		super.onResume();
 		// Obtem a lista dos contatos
 		List<Contato> contatos = listar();
-		if (contatos == null) {
+		if (contatos.isEmpty()) {
 			Toast.makeText(ContatosActivity.this, "Não foi possivel recuperar contatos", Toast.LENGTH_LONG).show();
 			super.onBackPressed();
 		} else {
