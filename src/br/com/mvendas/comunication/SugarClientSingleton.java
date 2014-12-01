@@ -24,6 +24,7 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.util.Log;
 import br.com.mvendas.utils.StringUtil;
@@ -31,7 +32,7 @@ import br.com.mvendas.utils.StringUtil;
 public class SugarClientSingleton {
 	
 	//public static final String host = "http://10.0.2.2/";
-	public static final String host = "http://192.168.2.100/";
+	public static final String host = "http://192.168.0.89/";
 	public static final String urlLogin = host + "sugardev/service/v2/rest.php";
 	public static final String urlCall  = host + "sugardev/service/v2/rest.php";
 	
@@ -61,6 +62,7 @@ public class SugarClientSingleton {
 	 * @param userName
 	 * @param password
 	 */	
+	@SuppressLint("NewApi")
 	public void login(String userName, String password) throws Exception {
 		String password1 = encryptor(password);
 

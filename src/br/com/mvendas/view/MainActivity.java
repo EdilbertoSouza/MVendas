@@ -161,14 +161,18 @@ public class MainActivity extends Activity {
 						List<Cliente> clientes = clienteDao.listarRemoto("Accounts.assigned_user_id='f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
 						for (int i = 0; i < clientes.size(); i++) {
 							Cliente cliente = clientes.get(i);
-							//clienteDao.inserirLocal(cliente);
+							Cliente clienteExistente = clienteDao.buscarLocal(cliente.getName());
+							if (clienteExistente != null) cliente.setIdLocal(clienteExistente.getIdLocal());								
+							clienteDao.salvarLocal(cliente);								
 						}
 						
 						AtualizarMensagem("Baixando Contatos...");
 						ContatoDao contatoDao = new ContatoDao(getApplicationContext());
 						List<Contato> contatos = contatoDao.listarRemoto("Contacts.assigned_user_id='f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
 						for (int i = 0; i < contatos.size(); i++) {
-							Contato contato = contatos.get(i);							
+							Contato contato = contatos.get(i);
+							Contato contatoExistente = contatoDao.buscarLocal(contato.getName());
+							if (contatoExistente != null) contato.setIdLocal(contatoExistente.getIdLocal());
 							contatoDao.salvarLocal(contato);
 						}					
 

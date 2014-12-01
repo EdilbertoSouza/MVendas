@@ -20,8 +20,6 @@ import br.com.mvendas.dao.ContatoDao;
 import br.com.mvendas.model.Contato;
 import br.com.mvendas.utils.ImageManipulation;
 
-import com.google.inject.Inject;
-
 @ContentView(R.layout.activity_contatos_form)
 public class ContatosFormActivity extends RoboActivity implements OnClickListener, OnLongClickListener {
 
@@ -32,9 +30,12 @@ public class ContatosFormActivity extends RoboActivity implements OnClickListene
 	private static final int INTENT_RESULT_DATA_CAMERA = 101;	
 	
 
-	@Inject
-	private ContatoDao contatoDao;
+	//@Inject
+	private ContatoDao contatoDao = new ContatoDao(this);
 	
+	@InjectView(R.id.tvIdLocal)
+	private TextView tvIdLocal;
+
 	@InjectView(R.id.tvId)
 	private TextView tvId;
 
@@ -92,10 +93,15 @@ public class ContatosFormActivity extends RoboActivity implements OnClickListene
 	public void onClick(View v) {
 		if(v == btSalvar){
 			Contato contato = getContato();
-			contatoDao.salvar(contato);
-			
-			Toast.makeText(this, contato.getName() + " salvo com sucesso!!!", 
-					Toast.LENGTH_SHORT).show();			
+			//contatoDao.salvar(contato);
+			ContatoDao contatoDao = new ContatoDao(getApplicationContext());
+			if (contatoDao.salvar(contato) > 0) {				
+				Toast.makeText(this, contato.getName() + " salvo com sucesso!!!", 
+						Toast.LENGTH_SHORT).show();			
+			} else {
+				Toast.makeText(this, "Não foi possível salvar o contato " + contato.getName(), 
+						Toast.LENGTH_SHORT).show();				
+			}
 			finish();
 			
 		} else if(v == ivContato){
@@ -145,14 +151,16 @@ public class ContatosFormActivity extends RoboActivity implements OnClickListene
 	 * @return contato
 	 */
 	private Contato getContato() {
+		long idLocal = 0;
 		String id = "";
 		
 		try {
 			id = tvId.getText().toString();
+			idLocal = Integer.parseInt(tvIdLocal.getText().toString());
 		} catch (NumberFormatException e) {
-			//id = Contato.getId();
+			//id = Cliente.getId();
 		}
-		
+				
 		Bitmap foto = ((BitmapDrawable) ivContato.getDrawable()).getBitmap();
 		String nome = etNome.getText().toString();
 		String sobrenome = etSobrenome.getText().toString();
@@ -163,7 +171,7 @@ public class ContatosFormActivity extends RoboActivity implements OnClickListene
 		String cidade = etCidade.getText().toString();
 		String estado = etEstado.getText().toString();
 		
-		Contato contato = new Contato(id, nome, sobrenome, cargo, depto, endereco, cidade, estado, telefone, foto);
+		Contato contato = new Contato(idLocal, id, nome, sobrenome, cargo, depto, endereco, cidade, estado, telefone, foto);
 		return contato;
 	}
 	
@@ -174,6 +182,7 @@ public class ContatosFormActivity extends RoboActivity implements OnClickListene
 	 */
 	private void setContato(Contato contato) {
 		if(contato != null){
+			tvIdLocal.setText(String.valueOf(contato.getIdLocal()));
 			tvId.setText(String.valueOf(contato.getId()));
 			//ivContato.setImageBitmap(contato.getFoto());
 			etNome.setText(contato.getName());

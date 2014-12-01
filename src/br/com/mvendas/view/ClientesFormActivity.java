@@ -166,8 +166,10 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	 * @param cliente
 	 * @return i
 	 */
+	@SuppressWarnings("unused")
 	private int getPosition(String cliente) {
 		for (int i = 0; i < cliente.length(); i++) {
+			@SuppressWarnings("static-access")
 			String item = cliente.valueOf(i);
 			if(cliente.equalsIgnoreCase(item)){
 				return i;
@@ -182,6 +184,7 @@ public class ClientesFormActivity extends RoboActivity implements OnClickListene
 	 * 
 	 * @param id_cliente
 	 */
+	@SuppressWarnings("unused")
 	private void carregaDadosPeloId(long id) {
 		ClienteDao clienteDao = new ClienteDao(getApplicationContext());
 		Cliente cliente = clienteDao.buscarLocal(id);

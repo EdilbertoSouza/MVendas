@@ -9,7 +9,7 @@ public class DaoFactory {
 	private static SQLiteHelper dbHelper = null;
 	
 	// Dados do banco de dados
-	protected static int VERSAO = 4;
+	protected static int VERSAO = 1;
 	protected static String NOME_BANCO = "mvendas";
 	
 	private static final String[] SCRIPT_DATABASE_DELETE = {

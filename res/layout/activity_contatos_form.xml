@@ -16,6 +16,12 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context=".ContatosFormActivity" >
 
+	    <TextView
+	        android:id="@+id/tvIdLocal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:visibility="gone" />
+        
         <TextView
             android:id="@+id/tvId"
             android:layout_width="wrap_content"

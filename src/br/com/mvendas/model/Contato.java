@@ -19,8 +19,9 @@ public class Contato implements Parcelable {
 	private String phone;
 	private String email;
 	
-	public Contato(String id, String nome, String lastName, String cargo, String depto, 
+	public Contato(long idlocal, String id, String nome, String lastName, String cargo, String depto, 
 		String endereco, String cidade, String estado, String telefone, Bitmap foto) {
+		setIdLocal(idlocal);
 		setId(id);
 		setName(nome);
 		setLastName(lastName);
@@ -173,6 +174,7 @@ public class Contato implements Parcelable {
 	}
 	
 	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeLong(idlocal);
 		dest.writeString(id);
 		dest.writeParcelable(foto, flags);
 		dest.writeString(name);
@@ -186,6 +188,7 @@ public class Contato implements Parcelable {
 	}
 	
 	private void readFromParcel(Parcel in) {
+		idlocal = in.readLong();
 		id = in.readString();
 		foto = in.readParcelable(Bitmap.class.getClassLoader());
 		name = in.readString();

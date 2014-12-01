@@ -82,7 +82,7 @@ public class ContatoDao {
 					contato.setName(c.getString(c.getColumnIndex("first_name")));
 					contato.setLastName(c.getString(c.getColumnIndex("last_name")));
 					contato.setCargo(c.getString(c.getColumnIndex("title")));
-					contato.setDepto(c.getString(c.getColumnIndex("departament")));					
+					contato.setDepto(c.getString(c.getColumnIndex("department")));					
 					contato.setStreet(c.getString(c.getColumnIndex("primary_address_street")));
 					contato.setCity(c.getString(c.getColumnIndex("primary_address_city")));
 					contato.setState(c.getString(c.getColumnIndex("primary_address_state")));
@@ -206,7 +206,7 @@ public class ContatoDao {
 		values.put("first_name", contato.getName());
 		values.put("last_name", contato.getLastName());
 		values.put("title", contato.getCargo());
-		values.put("departament", contato.getDepto());
+		values.put("department", contato.getDepto());
 		values.put("primary_address_street", contato.getStreet());
 		values.put("primary_address_city", contato.getCity());
 		values.put("primary_address_state", contato.getState());
@@ -232,7 +232,7 @@ public class ContatoDao {
 		values.put("first_name", contato.getName());
 		values.put("last_name", contato.getLastName());
 		values.put("title", contato.getCargo());
-		values.put("departament", contato.getDepto());
+		values.put("department", contato.getDepto());
 		values.put("primary_address_street", contato.getStreet());
 		values.put("primary_address_city", contato.getCity());
 		values.put("primary_address_state", contato.getState());
@@ -307,7 +307,7 @@ public class ContatoDao {
 			contato.setName(c.getString(c.getColumnIndex("first_name")));
 			contato.setLastName(c.getString(c.getColumnIndex("last_name")));
 			contato.setCargo(c.getString(c.getColumnIndex("title")));
-			contato.setDepto(c.getString(c.getColumnIndex("departament")));					
+			contato.setDepto(c.getString(c.getColumnIndex("department")));					
 			contato.setStreet(c.getString(c.getColumnIndex("primary_address_street")));
 			contato.setCity(c.getString(c.getColumnIndex("primary_address_city")));
 			contato.setState(c.getString(c.getColumnIndex("primary_address_state")));
@@ -328,7 +328,7 @@ public class ContatoDao {
 	 * @return Contato
 	 */
 	public Contato buscarLocal(String name) {
-		Cursor c = db.query(TABELA, fields, "name = ?", new String[]{name}, null, null, null);
+		Cursor c = db.query(TABELA, fields, "first_name = ?", new String[]{name}, null, null, null);
 		
 		Contato contato = null;
 		
@@ -341,7 +341,7 @@ public class ContatoDao {
 			contato.setName(c.getString(c.getColumnIndex("first_name")));
 			contato.setLastName(c.getString(c.getColumnIndex("last_name")));
 			contato.setCargo(c.getString(c.getColumnIndex("title")));
-			contato.setDepto(c.getString(c.getColumnIndex("departament")));					
+			contato.setDepto(c.getString(c.getColumnIndex("department")));					
 			contato.setStreet(c.getString(c.getColumnIndex("primary_address_street")));
 			contato.setCity(c.getString(c.getColumnIndex("primary_address_city")));
 			contato.setState(c.getString(c.getColumnIndex("primary_address_state")));
