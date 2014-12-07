@@ -154,29 +154,35 @@ public class MainActivity extends Activity {
 				public void run() {
 					String resp = "";					
 					try {
+						Log.i("info", "Efetuando Login");
 						sc.login("mvendas", "srlke58x");
 						
 						AtualizarMensagem("Baixando Clientes...");
+						Log.i("info", "Baixando Clientes");
 						ClienteDao clienteDao = new ClienteDao(getApplicationContext());
-						List<Cliente> clientes = clienteDao.listarRemoto("Accounts.assigned_user_id='f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
+						List<Cliente> clientes = clienteDao.listarRemoto("Accounts.assigned_user_id='f38e2557-d7f2-6ce2-ea05-528e97fd1519'", "100");
 						for (int i = 0; i < clientes.size(); i++) {
 							Cliente cliente = clientes.get(i);
 							Cliente clienteExistente = clienteDao.buscarLocal(cliente.getName());
 							if (clienteExistente != null) cliente.setIdLocal(clienteExistente.getIdLocal());								
-							clienteDao.salvarLocal(cliente);								
+							clienteDao.salvarLocal(cliente);
 						}
+						Log.i("info", Integer.toString(clientes.size()) + " Clientes Baixados");						
 						
 						AtualizarMensagem("Baixando Contatos...");
+						Log.i("info", "Baixando Contatos");						
 						ContatoDao contatoDao = new ContatoDao(getApplicationContext());
-						List<Contato> contatos = contatoDao.listarRemoto("Contacts.assigned_user_id='f38e2557-d7f2-6ce2-ea05-528e97fd1519'");
+						List<Contato> contatos = contatoDao.listarRemoto("Contacts.assigned_user_id='f38e2557-d7f2-6ce2-ea05-528e97fd1519'", "100");
 						for (int i = 0; i < contatos.size(); i++) {
 							Contato contato = contatos.get(i);
 							Contato contatoExistente = contatoDao.buscarLocal(contato.getName());
 							if (contatoExistente != null) contato.setIdLocal(contatoExistente.getIdLocal());
 							contatoDao.salvarLocal(contato);
 						}					
-
+						Log.i("info", Integer.toString(contatos.size()) + " Contatos Baixados");						
+						
 						AtualizarMensagem("Desconectando...");
+						Log.i("info", "Efetuando Logout");
 						sc.logout();
 					} catch (Exception e) {						
 						Log.e("info", e.getMessage(), e);

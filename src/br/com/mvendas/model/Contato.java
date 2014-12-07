@@ -42,9 +42,11 @@ public class Contato implements Parcelable {
 		String[] columns = name_values.split(";");
 		
 		for (int i = 0; i < columns.length; i++) {
+
 			String [] name_value = columns[i].toString().split("=");
 			String name  = name_value[0];
-			String value = name_value[1];
+			String value = name_value.length > 1 ? name_value[1] : "";
+
 			if(name.equalsIgnoreCase("id")){
 				setId(value);
 			} if(name.equalsIgnoreCase("first_name")){

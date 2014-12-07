@@ -36,9 +36,11 @@ public class Cliente implements Parcelable {
 		String[] linhas = cliente.split(";");
 		
 		for (int i = 0; i < linhas.length; i++) {
+			
 			String [] split = linhas[i].toString().split("=");
 			String chave = split[0];
-			String valor = split[1];
+			String valor = split.length > 1 ? split[1] : "";
+						
 			if(chave.equalsIgnoreCase("id")){
 				setId(valor);
 			} if(chave.equalsIgnoreCase("name")){

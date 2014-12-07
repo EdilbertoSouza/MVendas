@@ -56,7 +56,7 @@
         android:layout_height="100dp"
         android:layout_alignLeft="@+id/btEquipamentos"
         android:layout_below="@+id/btEquipamentos"
-        android:drawableTop="@drawable/ic_launcher"
+        android:drawableTop="@drawable/sincronizar"
         android:text="@string/sincronizar"
         android:textSize="@dimen/activity_main_buttons" />
 

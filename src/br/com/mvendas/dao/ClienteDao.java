@@ -95,7 +95,7 @@ public class ClienteDao {
 		return clientes;
 	}
 
-	public List<Cliente> listarRemoto(String where) throws Exception {
+	public List<Cliente> listarRemoto(String where, String max) throws Exception {
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		String select_fields = StringUtil.toArrayData(fields);
 		
@@ -108,7 +108,7 @@ public class ClienteDao {
 			{"offset", "0"},
 			{"select_fields", select_fields},
 			{"link_name_to_fields_array", "[]"}, 
-			{"max_results", "10"},
+			{"max_results", max},
 			{"deleted", "0"},
 			{"Favorites", "false"}
 		};

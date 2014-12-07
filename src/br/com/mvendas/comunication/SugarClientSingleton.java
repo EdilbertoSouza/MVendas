@@ -81,7 +81,7 @@ public class SugarClientSingleton {
 		if (session.isEmpty()) {
 			throw new Exception(jsonData.getString("description"));
 		}
-		Log.i("info", "Login Efetuado - Session = " + session);
+		Log.i("info", "Login Efetuado"); // + session);
 	}
 	
 	/***
@@ -138,9 +138,10 @@ public class SugarClientSingleton {
     public String call(String method, String parameters[][]) throws Exception {
     	String restData = StringUtil.toRestData(parameters);
         String request = urlCall+"?method="+method+"&input_type=json&response_type=json&rest_data="+restData;
-        Log.i("info", "request = " + request);        
+        //Log.i("info", "request = " + request);
         try {
     		result = httpPost(request);
+            //Log.i("info", "result = " + result);    		
 		} catch (Exception e) {
 			throw new Exception("call - Erro ao chamar url. " + e.getMessage());
 		}

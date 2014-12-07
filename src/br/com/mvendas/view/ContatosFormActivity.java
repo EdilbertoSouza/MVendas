@@ -31,7 +31,7 @@ public class ContatosFormActivity extends RoboActivity implements OnClickListene
 	
 
 	//@Inject
-	private ContatoDao contatoDao = new ContatoDao(this);
+	//private ContatoDao contatoDao = new ContatoDao(this);
 	
 	@InjectView(R.id.tvIdLocal)
 	private TextView tvIdLocal;

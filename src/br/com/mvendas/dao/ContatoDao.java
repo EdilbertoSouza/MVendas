@@ -100,7 +100,7 @@ public class ContatoDao {
 		return contatos;
 	}
 
-	public List<Contato> listarRemoto(String where) throws Exception {
+	public List<Contato> listarRemoto(String where, String max) throws Exception {
 		List<Contato> contatos = new ArrayList<Contato>();
 
 		String select_fields = StringUtil.toArrayData(fields);
@@ -114,7 +114,7 @@ public class ContatoDao {
 			{"offset", "0"},
 			{"select_fields", select_fields}, 
 			{"link_name_to_fields_array", "[]"}, 
-			{"max_results", "10"},
+			{"max_results", max},
 			{"deleted", "0"},
 			{"favorites", "false"}
 		};
